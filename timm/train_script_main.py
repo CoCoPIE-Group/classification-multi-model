@@ -67,8 +67,8 @@ from third_party.co_lib.co_lib import Co_Lib as CL
 from timm.utils.prune_util import print_sparsity
 
 # from xgen_tools import *
-# from third_party.toolchain.model_train.xgen_tools.model_train_tools import *
-from xgen_tools import *
+from third_party.toolchain.model_train.xgen_tools.model_train_tools import *
+# from xgen_tools import *
 
 COCOPIE_MAP = {}
 
@@ -719,10 +719,10 @@ def training_main(args_ai):
                 best_metric, best_epoch = saver.save_checkpoint(epoch, metric=save_metric)
 
                 if model_ema is not None:
-                    xgen_record(args_ai,model_ema.module,eval_metrics[eval_metric],epoch=epoch)
+                    save_model = model_ema.module if hasattr(model_ema, 'module') else model_ema
                 else:
-                    xgen_record(args_ai,model,eval_metrics[eval_metric],epoch=epoch)
-
+                    save_model = model.module if hasattr(model, 'module') else model
+                xgen_record(args_ai,save_model,eval_metrics[eval_metric],epoch=epoch)
 
     except KeyboardInterrupt:
         pass
@@ -737,9 +737,11 @@ def training_main(args_ai):
     print(f'eval top-1: {eval_metrics[eval_metric]}')
 
     if model_ema is not None:
-        xgen_record(args_ai,model_ema.module, eval_metrics[eval_metric], epoch=-1)
+        save_model = model_ema.module if hasattr(model_ema, 'module') else model_ema
     else:
-        xgen_record(args_ai,model,eval_metrics[eval_metric],epoch=-1)
+        save_model = model.module if hasattr(model, 'module') else model
+
+    xgen_record(args_ai,save_model, eval_metrics[eval_metric], epoch=-1)
 
     if best_metric is not None:
         _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
