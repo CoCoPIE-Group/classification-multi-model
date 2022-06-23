@@ -1,0 +1,186 @@
+{
+    "origin": {
+        "common_train_epochs": 100
+    },
+    "general": {
+        "user_id": "default",
+        "metrics": "psnr",
+        "domain": "computer_vision",
+        "application": "customized",
+        "category": "customized",
+        "base": "customized"
+    },
+    "prune": {
+        "sp_retrain": true,
+        "sp_admm": false,
+        "sp_store_weights": null,
+        "sp_lars": false,
+        "sp_lars_trust_coef": 0.001,
+        "sp_backbone": false,
+        "sp_admm_multi": false,
+        "sp_retrain_multi": false,
+        "sp_config_file": "prune_profiles/prune_config_effnetb0_nu0.6.yaml",
+        "sp_subset_progressive": false,
+        "sp_admm_fixed_params": false,
+        "sp_no_harden": false,
+        "nv_sparse": false,
+        "sp_load_prune_params": null,
+        "sp_store_prune_params": null,
+        "generate_rand_seq_gap_yaml": false,
+        "sp_admm_update_epoch": 60,
+        "sp_admm_update_batch": null,
+        "sp_admm_rho": 0.001,
+        "sp_admm_sparsity_type": "block_punched",
+        "sp_admm_lr": 0.01,
+        "admm_debug": false,
+        "sp_global_weight_sparsity": 0,
+        "sp_prune_threshold": -1.0,
+        "sp_block_irregular_sparsity": "(0,0)",
+        "sp_block_permute_multiplier": 2,
+        "sp_admm_block": "(8,4)",
+        "sp_admm_buckets_num": 16,
+        "sp_admm_elem_per_row": 1,
+        "sp_admm_tile": null,
+        "sp_admm_select_number": 4,
+        "sp_admm_pattern_row_sub": 1,
+        "sp_admm_pattern_col_sub": 4,
+        "sp_admm_data_format": null,
+        "sp_admm_do_not_permute_conv": false,
+        "sp_gs_output_v": null,
+        "sp_gs_output_ptr": null,
+        "sp_load_frozen_weights": null,
+        "retrain_mask_pattern": "weight",
+        "sp_update_init_method": "weight",
+        "sp_mask_update_freq": 10,
+        "retrain_mask_sparsity": -1.0,
+        "retrain_mask_seed": null,
+        "sp_prune_before_retrain": true,
+        "output_compressed_format": false,
+        "sp_grad_update": false,
+        "sp_grad_decay": 0.98,
+        "sp_grad_restore_threshold": -1,
+        "sp_global_magnitude": false,
+        "sp_pre_defined_mask_dir": null,
+        "sp_prune_ratios": null,
+        "train_epochs": 3
+    },
+    "task": {
+        "optimized_method": null,
+        "latency": 100,
+        "max_search_num": 3,
+        "main_logic": [
+            [
+                [
+                    [
+                        "simple_task",
+                        {}
+                    ],
+                    [
+                        "update_args",
+                        {
+                            "update_args": {}
+                        }
+                    ]
+                ],
+                null,
+                1
+            ],
+            [
+                [
+                    [
+                        "get_nearest_range",
+                        {
+                            "step": 2,
+                            "table_type": "pruning",
+                            "traned_yn": 0
+                        }
+                    ],
+                    [
+                        "grid_range_generator",
+                        {}
+                    ],
+                    [
+                        "get_nearest_model_accuracy",
+                        {
+                            "table_type": "pruning",
+                            "traned_yn": 1
+                        }
+                    ],
+                    [
+                        "generate_task",
+                        {}
+                    ],
+                    [
+                        "update_args",
+                        {
+                            "update_args": {
+                                "origin.train_epochs": 0,
+                                "prune.sp_retrain": 1,
+                                "prune.sp_prune_before_retrain": 1,
+                                "prune.sp_admm": 0
+                            }
+                        }
+                    ]
+                ],
+                null,
+                3
+            ],
+            [
+                [
+                    [
+                        "get_nearest_range",
+                        {
+                            "table_type": "pruning",
+                            "traned_yn": 0
+                        }
+                    ],
+                    [
+                        "get_nearest_model_accuracy",
+                        {
+                            "table_type": "pruning",
+                            "traned_yn": 1
+                        }
+                    ],
+                    [
+                        "fix_step_update",
+                        {}
+                    ],
+                    [
+                        "generate_task",
+                        {}
+                    ],
+                    [
+                        "update_args",
+                        {
+                            "update_args": {
+                                "prune.sp_prune_before_retrain": 1,
+                                "prune.sp_admm": 0,
+                                "prune.sp_retrain": 1
+                            }
+                        }
+                    ]
+                ],
+                null,
+                1
+            ]
+        ],
+        "latency_range": 10
+    },
+    "train": {
+        "log_save_folder": "logs",
+        "eval_dataset_id": null,
+        "training_dataset_id": null,
+        "uuid": "mag_prune_u0.6_effnetb0",
+        "accuracy_reverse_yn": 0,
+        "common_save_best_yn": 1
+    },
+    "compiler": {
+        "input_shape": "(1,3,224,224)",
+        "compiled_target_abis": "arm64",
+        "compiled_runtime": "gpu",
+        "precision": "float32",
+        "winograd": 2,
+        "device_id": "xiaomi?",
+        "test_rounds": 50
+    }
+}
