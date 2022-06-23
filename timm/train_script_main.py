@@ -67,7 +67,8 @@ from third_party.co_lib.co_lib import Co_Lib as CL
 from timm.utils.prune_util import print_sparsity
 
 # from xgen_tools import *
-from third_party.toolchain.model_train.xgen_tools.model_train_tools import *
+# from third_party.toolchain.model_train.xgen_tools.model_train_tools import *
+from xgen_tools import *
 
 COCOPIE_MAP = {}
 
