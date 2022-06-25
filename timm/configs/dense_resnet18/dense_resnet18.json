@@ -1,0 +1,50 @@
+{
+    "origin": {
+        "common_train_epochs": 0,
+
+        "train_data_path": "/data/ImageNet",
+        "train_label_path": null,
+        "eval_data_path": "/data/ImageNet",
+        "eval_label_path": null
+    },
+    "general": {
+        "work_place": "effnetb0",
+        "tran_scripts_path": null
+    },
+    "train": {
+        "log_save_folder": "logs",
+        "eval_dataset_id": null,
+        "training_dataset_id": null,
+        "uuid": "effnetb0",
+        "accuracy_reverse_yn": 0,
+        "common_save_best_yn": 1
+    },
+    "prune": {
+               "sp_retrain": false,
+        "sp_admm": false,
+        "sp_config_file": null,
+        "sp_admm_update_epoch": 5,
+        "sp_admm_rho": 0.001,
+        "sparsity_type": "block_punched",
+        "sp_admm_lr": 0.01,
+        "sp_global_weight_sparsity": false,
+        "sp_admm_block": "(8,4)",
+        "sp_prune_ratios": 0,
+        "sp_prune_threshold": -1.0
+    },
+    "task": {
+        "pretrained_model_path": null,
+        "max_searching": 3
+    },
+   "user_requirements": {
+       "accuracy": null,
+       "latency": 30,
+       "margin": 2,
+       "searching_variable": null,
+       "searching_range": null,
+       "searching_step_size": null
+   },
+    "compiler": {
+       "input_shape": "(1,3,224,224)"
+   }
+}

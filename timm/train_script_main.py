@@ -923,7 +923,7 @@ def validate(model, loader, loss_fn, args, amp_autocast=suppress, log_suffix='')
 
 
 if __name__ == '__main__':
-    # task_json = 'configs/dense_effnetb0/dense_effnetb0.json'
+    # task_json = 'configs/dense_effnetb0/dense_resnet18.json'
     # args_ai = json.load(open(task_json,'r'))
     args_ai = None
     training_main(args_ai)
