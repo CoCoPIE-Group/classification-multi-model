@@ -48,4 +48,4 @@ Thumbs.db
 *.mov
 *.wmv
 
-/timm/third_party/
+timm/third_party/
