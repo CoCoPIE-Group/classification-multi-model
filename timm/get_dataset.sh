@@ -2,8 +2,8 @@
 #
 # script to fully prepare ImageNet dataset
 
-mkdir -p /data/ImageNet
-cd /data/ImageNet
+mkdir -p /data/imagenet
+cd /data/imagenet
 
 ## 1. Download the data
 #get ILSVRC2012_img_val.tar (about 6.3 GB). MD5: 29b22e2961454d5413ddabcf34fc5622
