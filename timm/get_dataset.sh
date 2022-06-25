@@ -6,10 +6,10 @@ mkdir -p /data/ImageNet
 cd /data/ImageNet
 
 ## 1. Download the data
-get ILSVRC2012_img_val.tar (about 6.3 GB). MD5: 29b22e2961454d5413ddabcf34fc5622
-# wget https://image-net.org/data/ILSVRC/2012/ILSVRC2012_img_val.tar
-get ILSVRC2012_img_train.tar (about 138 GB). MD5: 1d675b47d978889d74fa0da5fadfb00e
-# wget https://image-net.org/data/ILSVRC/2012/ILSVRC2012_img_train.tar
+#get ILSVRC2012_img_val.tar (about 6.3 GB). MD5: 29b22e2961454d5413ddabcf34fc5622
+aria2c -x 8 -s 8 https://image-net.org/data/ILSVRC/2012/ILSVRC2012_img_val.tar
+#get ILSVRC2012_img_train.tar (about 138 GB). MD5: 1d675b47d978889d74fa0da5fadfb00e
+aria2c -x 8 -s 8 https://image-net.org/data/ILSVRC/2012/ILSVRC2012_img_train.tar
 
 ## 2. Extract the training data:
 mkdir train && mv ILSVRC2012_img_train.tar train/ && cd train
