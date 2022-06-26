@@ -724,6 +724,8 @@ def training_main(args_ai):
                     save_model = model.module if hasattr(model, 'module') else model
                 xgen_record(args_ai,save_model,eval_metrics[eval_metric],epoch=epoch)
 
+                del save_model
+
     except KeyboardInterrupt:
         pass
 
@@ -740,8 +742,8 @@ def training_main(args_ai):
         save_model = model_ema.module if hasattr(model_ema, 'module') else model_ema
     else:
         save_model = model.module if hasattr(model, 'module') else model
-
     xgen_record(args_ai,save_model, eval_metrics[eval_metric], epoch=-1)
+    del save_model
 
     if best_metric is not None:
         _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
