@@ -731,7 +731,6 @@ def training_main(args_ai):
                 else:
                     xgen_record(args_ai, model, eval_metrics[eval_metric], epoch=epoch)
 
-
     except KeyboardInterrupt:
         pass
 
@@ -745,11 +744,17 @@ def training_main(args_ai):
     print(f'eval top-1: {eval_metrics[eval_metric]}')
 
     if model_ema is not None:
-        save_model = model_ema.module if hasattr(model_ema, 'module') else model_ema
+        if hasattr(model_ema, 'module'):
+            print(f'saving model, ema: {model_ema is not None}')
+            xgen_record(args_ai, model_ema.module, eval_metrics[eval_metric], epoch=-1)
+        else:
+            xgen_record(args_ai, model_ema, eval_metrics[eval_metric], epoch=-1)
     else:
-        save_model = model.module if hasattr(model, 'module') else model
-
-    xgen_record(args_ai,save_model, eval_metrics[eval_metric], epoch=-1)
+        if hasattr(model, 'module'):
+            print(f'saving model, ema: {model_ema is not None}')
+            xgen_record(args_ai, model.module, eval_metrics[eval_metric], epoch=-1)
+        else:
+            xgen_record(args_ai, model, eval_metrics[eval_metric], epoch=-1)
 
     if best_metric is not None:
         _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
