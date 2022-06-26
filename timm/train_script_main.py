@@ -718,13 +718,19 @@ def training_main(args_ai):
                 save_metric = eval_metrics[eval_metric]
                 best_metric, best_epoch = saver.save_checkpoint(epoch, metric=save_metric)
 
-                if model_ema is not None:
-                    save_model = model_ema.module if hasattr(model_ema, 'module') else model_ema
+            if model_ema is not None:
+                if hasattr(model_ema, 'module'):
+                    print(f'saving model, ema: {model_ema is not None}')
+                    xgen_record(args_ai, model_ema.module, eval_metrics[eval_metric], epoch=epoch)
                 else:
-                    save_model = model.module if hasattr(model, 'module') else model
-                xgen_record(args_ai,save_model,eval_metrics[eval_metric],epoch=epoch)
+                    xgen_record(args_ai, model_ema, eval_metrics[eval_metric], epoch=epoch)
+            else:
+                if hasattr(model, 'module'):
+                    print(f'saving model, ema: {model_ema is not None}')
+                    xgen_record(args_ai, model.module, eval_metrics[eval_metric], epoch=epoch)
+                else:
+                    xgen_record(args_ai, model, eval_metrics[eval_metric], epoch=epoch)
 
-                del save_model
 
     except KeyboardInterrupt:
         pass
@@ -742,8 +748,8 @@ def training_main(args_ai):
         save_model = model_ema.module if hasattr(model_ema, 'module') else model_ema
     else:
         save_model = model.module if hasattr(model, 'module') else model
+
     xgen_record(args_ai,save_model, eval_metrics[eval_metric], epoch=-1)
-    del save_model
 
     if best_metric is not None:
         _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))

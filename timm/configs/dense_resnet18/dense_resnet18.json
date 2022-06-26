@@ -2,9 +2,9 @@
     "origin": {
         "common_train_epochs": 300,
 
-        "train_data_path": "/data/imagenet",
+        "train_data_path": "/data/ImageNet",
         "train_label_path": null,
-        "eval_data_path": "/data/imagenet",
+        "eval_data_path": "/data/ImageNet",
         "eval_label_path": null
     },
     "general": {
