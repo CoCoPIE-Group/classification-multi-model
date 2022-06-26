@@ -29,3 +29,4 @@ wget -qO- https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/
 
 ## 5. Sometimes TFRecords may be usefull
 # wget https://raw.githubusercontent.com/tensorflow/models/master/research/slim/datasets/imagenet_lsvrc_2015_synsets.txt
+
