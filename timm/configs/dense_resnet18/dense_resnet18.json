@@ -9,7 +9,7 @@
 
         "model": "resnet18",
         "amp": "true",
-        "batch": 192,
+        "batch_size": 192,
         "lr": 3.3e-3,
         "weight_decay": 0.01,
         "sched": "cosine",
@@ -17,7 +17,9 @@
         "crop_pct": 0.95,
         "smoothing": 0.1,
         "warmup_epochs": 5,
+        "warmup_lr": 0.0001,
         "aa": "rand-m7-n3-mstd1.0-inc1",
+        "remode": "pixel",
         "seed": 0,
         "opt": "adamp",
         "warmup-lr": 1e-6,
@@ -26,7 +28,9 @@
         "reprob": 0.35,
         "mixup": 0.2,
         "cutmix": 1.0,
-        "bce_loss": true
+        "bce_loss": true,
+        "model_ema": false,
+        "workers": 8
     },
     "general": {
         "work_place": "resnet18",

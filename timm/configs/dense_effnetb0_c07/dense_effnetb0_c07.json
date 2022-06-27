@@ -5,7 +5,27 @@
         "train_data_path": "/data/imagenet",
         "train_label_path": null,
         "eval_data_path": "/data/imagenet",
-        "eval_label_path": null
+        "eval_label_path": null,
+
+        "model": "efficientnet_b0_c07",
+        "batch_size": 384,
+        "sched": "step",
+        "decay_epochs": 2.4,
+        "decay_rate": 0.97,
+        "opt": "rmsproptf",
+        "opt_eps": 0.001,
+        "workers": 8,
+        "warmup_lr": 1e-6,
+        "weight_decay": 1e-5,
+        "drop": 0.2,
+        "drop_path": 0.2,
+        "model_ema": true,
+        "model_ema_decay": 0.9999,
+        "aa": "rand-m9-mstd0.5",
+        "remode": "pixel",
+        "reprob": 0.2,
+        "amp": true,
+        "lr": 0.048
     },
     "general": {
         "work_place": "effnetb0_c07",

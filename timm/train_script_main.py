@@ -102,8 +102,8 @@ group.add_argument('--class-map', default='', type=str, metavar='FILENAME',
 
 # Model parameters
 group = parser.add_argument_group('Model parameters')
-group.add_argument('--model', default='resnet50', type=str, metavar='MODEL',
-                    help='Name of model to train (default: "resnet50"')
+# group.add_argument('--model', default='resnet50', type=str, metavar='MODEL',
+#                     help='Name of model to train (default: "resnet50"')
 group.add_argument('--pretrained', action='store_true', default=False,
                     help='Start with pretrained version of specified network (if avail)')
 group.add_argument('--initial-checkpoint', default='', type=str, metavar='PATH',
@@ -120,16 +120,16 @@ group.add_argument('--img-size', type=int, default=None, metavar='N',
                     help='Image patch size (default: None => model default)')
 group.add_argument('--input-size', default=None, nargs=3, type=int,
                     metavar='N N N', help='Input all image dimensions (d h w, e.g. --input-size 3 224 224), uses model default if empty')
-group.add_argument('--crop-pct', default=None, type=float,
-                    metavar='N', help='Input image center crop percent (for validation only)')
+# group.add_argument('--crop-pct', default=None, type=float,
+#                     metavar='N', help='Input image center crop percent (for validation only)')
 group.add_argument('--mean', type=float, nargs='+', default=None, metavar='MEAN',
                     help='Override mean pixel value of dataset')
 group.add_argument('--std', type=float, nargs='+', default=None, metavar='STD',
                     help='Override std deviation of dataset')
 group.add_argument('--interpolation', default='', type=str, metavar='NAME',
                     help='Image resize interpolation type (overrides model)')
-group.add_argument('-b', '--batch-size', type=int, default=128, metavar='N',
-                    help='Input batch size for training (default: 128)')
+# group.add_argument('-b', '--batch-size', type=int, default=128, metavar='N',
+#                     help='Input batch size for training (default: 128)')
 group.add_argument('-vb', '--validation-batch-size', type=int, default=None, metavar='N',
                     help='Validation batch size override (default: None)')
 group.add_argument('--channels-last', action='store_true', default=False,
@@ -143,16 +143,16 @@ group.add_argument('--grad-checkpointing', action='store_true', default=False,
 
 # Optimizer parameters
 group = parser.add_argument_group('Optimizer parameters')
-group.add_argument('--opt', default='sgd', type=str, metavar='OPTIMIZER',
-                    help='Optimizer (default: "sgd"')
-group.add_argument('--opt-eps', default=None, type=float, metavar='EPSILON',
-                    help='Optimizer Epsilon (default: None, use opt default)')
+# group.add_argument('--opt', default='sgd', type=str, metavar='OPTIMIZER',
+#                     help='Optimizer (default: "sgd"')
+# group.add_argument('--opt-eps', default=None, type=float, metavar='EPSILON',
+#                     help='Optimizer Epsilon (default: None, use opt default)')
 group.add_argument('--opt-betas', default=None, type=float, nargs='+', metavar='BETA',
                     help='Optimizer Betas (default: None, use opt default)')
 group.add_argument('--momentum', type=float, default=0.9, metavar='M',
                     help='Optimizer momentum (default: 0.9)')
-group.add_argument('--weight-decay', type=float, default=2e-5,
-                    help='weight decay (default: 2e-5)')
+# group.add_argument('--weight-decay', type=float, default=2e-5,
+#                     help='weight decay (default: 2e-5)')
 group.add_argument('--clip-grad', type=float, default=None, metavar='NORM',
                     help='Clip gradient norm (default: None, no clipping)')
 group.add_argument('--clip-mode', type=str, default='norm',
@@ -162,10 +162,10 @@ group.add_argument('--layer-decay', type=float, default=None,
 
 # Learning rate schedule parameters
 group = parser.add_argument_group('Learning rate schedule parameters')
-group.add_argument('--sched', default='cosine', type=str, metavar='SCHEDULER',
-                    help='LR scheduler (default: "step"')
-group.add_argument('--lr', type=float, default=0.05, metavar='LR',
-                    help='learning rate (default: 0.05)')
+# group.add_argument('--sched', default='cosine', type=str, metavar='SCHEDULER',
+#                     help='LR scheduler (default: "step"')
+# group.add_argument('--lr', type=float, default=0.05, metavar='LR',
+#                     help='learning rate (default: 0.05)')
 group.add_argument('--lr-noise', type=float, nargs='+', default=None, metavar='pct, pct',
                     help='learning rate noise on/off epoch percentages')
 group.add_argument('--lr-noise-pct', type=float, default=0.67, metavar='PERCENT',
@@ -180,8 +180,8 @@ group.add_argument('--lr-cycle-limit', type=int, default=1, metavar='N',
                     help='learning rate cycle limit, cycles enabled if > 1')
 group.add_argument('--lr-k-decay', type=float, default=1.0,
                     help='learning rate k-decay for cosine/poly (default: 1.0)')
-group.add_argument('--warmup-lr', type=float, default=0.0001, metavar='LR',
-                    help='warmup learning rate (default: 0.0001)')
+# group.add_argument('--warmup-lr', type=float, default=0.0001, metavar='LR',
+#                     help='warmup learning rate (default: 0.0001)')
 group.add_argument('--min-lr', type=float, default=1e-6, metavar='LR',
                     help='lower lr bound for cyclic schedulers that hit 0 (1e-5)')
 group.add_argument('--epochs', type=int, default=300, metavar='N',
@@ -192,16 +192,16 @@ group.add_argument('--start-epoch', default=None, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
 group.add_argument('--decay-milestones', default=[30, 60], type=int, nargs='+', metavar="MILESTONES",
                     help='list of decay epoch indices for multistep lr. must be increasing')
-group.add_argument('--decay-epochs', type=float, default=100, metavar='N',
-                    help='epoch interval to decay LR')
-group.add_argument('--warmup-epochs', type=int, default=3, metavar='N',
-                    help='epochs to warmup LR, if scheduler supports')
+# group.add_argument('--decay-epochs', type=float, default=100, metavar='N',
+#                     help='epoch interval to decay LR')
+# group.add_argument('--warmup-epochs', type=int, default=3, metavar='N',
+#                     help='epochs to warmup LR, if scheduler supports')
 group.add_argument('--cooldown-epochs', type=int, default=10, metavar='N',
                     help='epochs to cooldown LR at min_lr, after cyclic schedule ends')
 group.add_argument('--patience-epochs', type=int, default=10, metavar='N',
                     help='patience epochs for Plateau LR scheduler (default: 10')
-group.add_argument('--decay-rate', '--dr', type=float, default=0.1, metavar='RATE',
-                    help='LR decay rate (default: 0.1)')
+# group.add_argument('--decay-rate', '--dr', type=float, default=0.1, metavar='RATE',
+#                     help='LR decay rate (default: 0.1)')
 
 # Augmentation & regularization parameters
 group = parser.add_argument_group('Augmentation and regularization parameters')
@@ -217,30 +217,30 @@ group.add_argument('--vflip', type=float, default=0.,
                     help='Vertical flip training aug probability')
 group.add_argument('--color-jitter', type=float, default=0.4, metavar='PCT',
                     help='Color jitter factor (default: 0.4)')
-group.add_argument('--aa', type=str, default=None, metavar='NAME',
-                    help='Use AutoAugment policy. "v0" or "original". (default: None)'),
+# group.add_argument('--aa', type=str, default=None, metavar='NAME',
+#                     help='Use AutoAugment policy. "v0" or "original". (default: None)'),
 group.add_argument('--aug-repeats', type=float, default=0,
                     help='Number of augmentation repetitions (distributed training only) (default: 0)')
 group.add_argument('--aug-splits', type=int, default=0,
                     help='Number of augmentation splits (default: 0, valid: 0 or >=2)')
 group.add_argument('--jsd-loss', action='store_true', default=False,
                     help='Enable Jensen-Shannon Divergence + CE loss. Use with `--aug-splits`.')
-group.add_argument('--bce-loss', action='store_true', default=False,
-                    help='Enable BCE loss w/ Mixup/CutMix use.')
+# group.add_argument('--bce-loss', action='store_true', default=False,
+#                     help='Enable BCE loss w/ Mixup/CutMix use.')
 group.add_argument('--bce-target-thresh', type=float, default=None,
                     help='Threshold for binarizing softened BCE targets (default: None, disabled)')
-group.add_argument('--reprob', type=float, default=0., metavar='PCT',
-                    help='Random erase prob (default: 0.)')
-group.add_argument('--remode', type=str, default='pixel',
-                    help='Random erase mode (default: "pixel")')
+# group.add_argument('--reprob', type=float, default=0., metavar='PCT',
+#                     help='Random erase prob (default: 0.)')
+# group.add_argument('--remode', type=str, default='pixel',
+#                     help='Random erase mode (default: "pixel")')
 group.add_argument('--recount', type=int, default=1,
                     help='Random erase count (default: 1)')
 group.add_argument('--resplit', action='store_true', default=False,
                     help='Do not random erase first (clean) augmentation split')
-group.add_argument('--mixup', type=float, default=0.0,
-                    help='mixup alpha, mixup enabled if > 0. (default: 0.)')
-group.add_argument('--cutmix', type=float, default=0.0,
-                    help='cutmix alpha, cutmix enabled if > 0. (default: 0.)')
+# group.add_argument('--mixup', type=float, default=0.0,
+#                     help='mixup alpha, mixup enabled if > 0. (default: 0.)')
+# group.add_argument('--cutmix', type=float, default=0.0,
+#                     help='cutmix alpha, cutmix enabled if > 0. (default: 0.)')
 group.add_argument('--cutmix-minmax', type=float, nargs='+', default=None,
                     help='cutmix min/max ratio, overrides alpha and enables cutmix if set (default: None)')
 group.add_argument('--mixup-prob', type=float, default=1.0,
@@ -251,16 +251,16 @@ group.add_argument('--mixup-mode', type=str, default='batch',
                     help='How to apply mixup/cutmix params. Per "batch", "pair", or "elem"')
 group.add_argument('--mixup-off-epoch', default=0, type=int, metavar='N',
                     help='Turn off mixup after this epoch, disabled if 0 (default: 0)')
-group.add_argument('--smoothing', type=float, default=0.1,
-                    help='Label smoothing (default: 0.1)')
-group.add_argument('--train-interpolation', type=str, default='random',
-                    help='Training interpolation (random, bilinear, bicubic default: "random")')
-group.add_argument('--drop', type=float, default=0.0, metavar='PCT',
-                    help='Dropout rate (default: 0.)')
+# group.add_argument('--smoothing', type=float, default=0.1,
+#                     help='Label smoothing (default: 0.1)')
+# group.add_argument('--train-interpolation', type=str, default='random',
+#                     help='Training interpolation (random, bilinear, bicubic default: "random")')
+# group.add_argument('--drop', type=float, default=0.0, metavar='PCT',
+#                     help='Dropout rate (default: 0.)')
 group.add_argument('--drop-connect', type=float, default=None, metavar='PCT',
                     help='Drop connect rate, DEPRECATED, use drop-path (default: None)')
-group.add_argument('--drop-path', type=float, default=None, metavar='PCT',
-                    help='Drop path rate (default: None)')
+# group.add_argument('--drop-path', type=float, default=None, metavar='PCT',
+#                     help='Drop path rate (default: None)')
 group.add_argument('--drop-block', type=float, default=None, metavar='PCT',
                     help='Drop block rate (default: None)')
 
@@ -279,17 +279,17 @@ group.add_argument('--split-bn', action='store_true',
 
 # Model Exponential Moving Average
 group = parser.add_argument_group('Model exponential moving average parameters')
-group.add_argument('--model-ema', action='store_true', default=False,
-                    help='Enable tracking moving average of model weights')
+# group.add_argument('--model-ema', action='store_true', default=False,
+#                     help='Enable tracking moving average of model weights')
 group.add_argument('--model-ema-force-cpu', action='store_true', default=False,
                     help='Force ema to be tracked on CPU, rank=0 node only. Disables EMA validation.')
-group.add_argument('--model-ema-decay', type=float, default=0.9998,
-                    help='decay factor for model weights moving average (default: 0.9998)')
+# group.add_argument('--model-ema-decay', type=float, default=0.9998,
+#                     help='decay factor for model weights moving average (default: 0.9998)')
 
 # Misc
 group = parser.add_argument_group('Miscellaneous parameters')
-group.add_argument('--seed', type=int, default=42, metavar='S',
-                    help='random seed (default: 42)')
+# group.add_argument('--seed', type=int, default=42, metavar='S',
+#                     help='random seed (default: 42)')
 group.add_argument('--worker-seeding', type=str, default='all',
                     help='worker seed mode (default: all)')
 group.add_argument('--log-interval', type=int, default=50, metavar='N',
@@ -298,12 +298,12 @@ group.add_argument('--recovery-interval', type=int, default=0, metavar='N',
                     help='how many batches to wait before writing recovery checkpoint')
 group.add_argument('--checkpoint-hist', type=int, default=10, metavar='N',
                     help='number of checkpoints to keep (default: 10)')
-group.add_argument('-j', '--workers', type=int, default=4, metavar='N',
-                    help='how many training processes to use (default: 4)')
+# group.add_argument('-j', '--workers', type=int, default=4, metavar='N',
+#                     help='how many training processes to use (default: 4)')
 group.add_argument('--save-images', action='store_true', default=False,
                     help='save images of input bathes every log interval for debugging')
-group.add_argument('--amp', action='store_true', default=False,
-                    help='use NVIDIA Apex AMP or Native AMP for mixed precision training')
+# group.add_argument('--amp', action='store_true', default=False,
+#                     help='use NVIDIA Apex AMP or Native AMP for mixed precision training')
 group.add_argument('--apex-amp', action='store_true', default=False,
                     help='Use NVIDIA Apex AMP mixed precision')
 group.add_argument('--native-amp', action='store_true', default=False,
