@@ -1,6 +1,6 @@
 {
     "origin": {
-        "common_train_epochs": 0,
+        "common_train_epochs": 450,
 
         "train_data_path": "/data/imagenet",
         "train_label_path": null,
@@ -10,11 +10,15 @@
         "model": "efficientnet_b0_c07",
         "batch_size": 384,
         "sched": "step",
+        "train_interpolation": "random",
+        "crop_pct": null,
+        "smoothing": 0.1,
         "decay_epochs": 2.4,
         "decay_rate": 0.97,
         "opt": "rmsproptf",
         "opt_eps": 0.001,
         "workers": 8,
+        "warmup_epochs": 3,
         "warmup_lr": 1e-6,
         "weight_decay": 1e-5,
         "drop": 0.2,
@@ -23,9 +27,13 @@
         "model_ema_decay": 0.9999,
         "aa": "rand-m9-mstd0.5",
         "remode": "pixel",
+        "seed": 0,
         "reprob": 0.2,
         "amp": true,
-        "lr": 0.048
+        "lr": 0.048,
+        "mixup": 0.0,
+        "cutmix": 0.0,
+        "bce_loss": false
     },
     "general": {
         "work_place": "effnetb0_c07",
