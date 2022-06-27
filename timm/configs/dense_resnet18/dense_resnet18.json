@@ -1,11 +1,32 @@
 {
     "origin": {
-        "common_train_epochs": 300,
+        "common_train_epochs": 600,
 
         "train_data_path": "/data/imagenet",
         "train_label_path": null,
         "eval_data_path": "/data/imagenet",
-        "eval_label_path": null
+        "eval_label_path": null,
+
+        "model": "resnet18",
+        "amp": "true",
+        "batch": 192,
+        "lr": 3.3e-3,
+        "weight_decay": 0.01,
+        "sched": "cosine",
+        "train_interpolation": "bicubic",
+        "crop_pct": 0.95,
+        "smoothing": 0.1,
+        "warmup_epochs": 5,
+        "aa": "rand-m7-n3-mstd1.0-inc1",
+        "seed": 0,
+        "opt": "adamp",
+        "warmup-lr": 1e-6,
+        "drop_path": 0.05,
+        "drop": 0.1,
+        "reprob": 0.35,
+        "mixup": 0.2,
+        "cutmix": 1.0,
+        "bce_loss": true
     },
     "general": {
         "work_place": "resnet18",
