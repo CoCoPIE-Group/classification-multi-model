@@ -106,8 +106,8 @@ group = parser.add_argument_group('Model parameters')
 #                     help='Name of model to train (default: "resnet50"')
 group.add_argument('--pretrained', action='store_true', default=False,
                     help='Start with pretrained version of specified network (if avail)')
-group.add_argument('--initial-checkpoint', default='', type=str, metavar='PATH',
-                    help='Initialize model from this checkpoint (default: none)')
+# group.add_argument('--initial-checkpoint', default='', type=str, metavar='PATH',
+#                     help='Initialize model from this checkpoint (default: none)')
 group.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='Resume full model and optimizer state from checkpoint (default: none)')
 group.add_argument('--no-resume-opt', action='store_true', default=False,
@@ -422,8 +422,10 @@ def training_main(args_ai):
         global_pool=args.gp,
         bn_momentum=args.bn_momentum,
         bn_eps=args.bn_eps,
-        scriptable=args.torchscript,
-        checkpoint_path=args.initial_checkpoint)
+        scriptable=args.torchscript)
+
+    xgen_load(model, args_ai=args_ai)
+
     if args.num_classes is None:
         assert hasattr(model, 'num_classes'), 'Model must have `num_classes` attr if not set on cmd line/config.'
         args.num_classes = model.num_classes
