@@ -692,7 +692,7 @@ def training_main(args_ai):
                 distribute_bn(model, args.world_size, args.dist_bn == 'reduce')
 
             eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
-            if model_ema is not None and not args.model_ema_force_cpu:
+            if model_ema and not args.model_ema_force_cpu:
                 if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
                     distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
                 ema_eval_metrics = validate(
@@ -718,7 +718,7 @@ def training_main(args_ai):
                 save_metric = eval_metrics[eval_metric]
                 best_metric, best_epoch = saver.save_checkpoint(epoch, metric=save_metric)
 
-            if model_ema is not None:
+            if model_ema:
                 if hasattr(model_ema, 'module'):
                     print(f'saving model, ema: {model_ema is not None}')
                     xgen_record(args_ai, model_ema.module, eval_metrics[eval_metric], epoch=epoch)
@@ -735,7 +735,7 @@ def training_main(args_ai):
         pass
 
     eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
-    if model_ema is not None and not args.model_ema_force_cpu:
+    if model_ema and not args.model_ema_force_cpu:
         if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
             distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
         ema_eval_metrics = validate(
@@ -743,7 +743,7 @@ def training_main(args_ai):
         eval_metrics = ema_eval_metrics
     print(f'eval top-1: {eval_metrics[eval_metric]}')
 
-    if model_ema is not None:
+    if model_ema:
         if hasattr(model_ema, 'module'):
             print(f'saving model, ema: {model_ema is not None}')
             xgen_record(args_ai, model_ema.module, eval_metrics[eval_metric], epoch=-1)
@@ -816,7 +816,7 @@ def train_one_epoch(
                     value=args.clip_grad, mode=args.clip_mode)
             optimizer.step()
 
-        if model_ema is not None:
+        if model_ema:
             model_ema.update(model)
 
         torch.cuda.synchronize()
