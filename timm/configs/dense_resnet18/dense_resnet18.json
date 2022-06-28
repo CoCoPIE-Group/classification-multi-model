@@ -6,6 +6,7 @@
         "train_label_path": null,
         "eval_data_path": "/data/imagenet",
         "eval_label_path": null,
+        "pretrain_model_weights_path": null,
 
         "model": "resnet18",
         "amp": "true",

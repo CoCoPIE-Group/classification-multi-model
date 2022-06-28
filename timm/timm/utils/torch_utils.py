@@ -240,6 +240,16 @@ def split_train_val(input_folder, output_folder):
     splitfolders.ratio(input_folder, output=output_folder,
                        seed=1337, ratio=(.95, .05), group_prefix=None, move=False) # default values
 
+def is_parallel(model):
+    # Returns True if model is of type DP or DDP
+    return type(model) in (nn.parallel.DataParallel, nn.parallel.DistributedDataParallel)
+
+
+def de_parallel(model):
+    # De-parallelize a model: returns single-GPU model if model is of type DP or DDP
+    return model.module if is_parallel(model) else model
+
+
 if __name__ == "__main__":
     traindir = "/home/kai/code/YiChe/car"
     # train_dataset = datasets.ImageFolder(

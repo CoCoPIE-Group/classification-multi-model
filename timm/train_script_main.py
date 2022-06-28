@@ -15,6 +15,7 @@ NVIDIA CUDA specific speedups adopted from NVIDIA Apex examples
 Hacked together by / Copyright 2020 Ross Wightman (https://github.com/rwightman)
 """
 import argparse
+import copy
 import time
 import yaml
 import json
@@ -69,6 +70,8 @@ from timm.utils.prune_util import print_sparsity
 # from xgen_tools import *
 from third_party.toolchain.model_train.xgen_tools.model_train_tools import *
 # from xgen_tools import *
+
+from timm.utils.torch_utils import de_parallel
 
 COCOPIE_MAP = {}
 
@@ -683,10 +686,10 @@ def training_main(args_ai):
             if args.distributed and hasattr(loader_train.sampler, 'set_epoch'):
                 loader_train.sampler.set_epoch(epoch)
 
-            # train_metrics = train_one_epoch(
-            #     epoch, model, loader_train, optimizer, train_loss_fn, args,
-            #     lr_scheduler=lr_scheduler, saver=saver, output_dir=output_dir,
-            #     amp_autocast=amp_autocast, loss_scaler=loss_scaler, model_ema=model_ema, mixup_fn=mixup_fn)
+            train_metrics = train_one_epoch(
+                epoch, model, loader_train, optimizer, train_loss_fn, args,
+                lr_scheduler=lr_scheduler, saver=saver, output_dir=output_dir,
+                amp_autocast=amp_autocast, loss_scaler=loss_scaler, model_ema=model_ema, mixup_fn=mixup_fn)
 
             if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
                 if args.local_rank == 0:
@@ -710,10 +713,10 @@ def training_main(args_ai):
             # CPL.update_lr(optimizer, epoch, args)
             # Cocopie end
 
-            # if output_dir is not None:
-                # update_summary(
-                #     epoch, train_metrics, eval_metrics, os.path.join(output_dir, 'summary.csv'),
-                #     write_header=best_metric is None, log_wandb=args.log_wandb and has_wandb)
+            if output_dir is not None:
+                update_summary(
+                    epoch, train_metrics, eval_metrics, os.path.join(output_dir, 'summary.csv'),
+                    write_header=best_metric is None, log_wandb=args.log_wandb and has_wandb)
 
             if saver is not None:
                 # save proper checkpoint with eval metric
@@ -746,17 +749,13 @@ def training_main(args_ai):
     print(f'eval top-1: {eval_metrics[eval_metric]}')
 
     if model_ema:
-        if hasattr(model_ema, 'module'):
-            print(f'saving model, ema: {model_ema is not None}')
-            xgen_record(args_ai, model_ema.module, eval_metrics[eval_metric], epoch=-1)
-        else:
-            xgen_record(args_ai, model_ema, eval_metrics[eval_metric], epoch=-1)
+        model_dummy = de_parallel(copy.deepcopy(model_ema))
+        xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=-1)
     else:
-        if hasattr(model, 'module'):
-            print(f'saving model, ema: {model_ema is not None}')
-            xgen_record(args_ai, model.module, eval_metrics[eval_metric], epoch=-1)
-        else:
-            xgen_record(args_ai, model, eval_metrics[eval_metric], epoch=-1)
+        model_dummy = de_parallel(copy.deepcopy(model))
+        xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=-1)
+
+    del model_dymmy
 
     if best_metric is not None:
         _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
