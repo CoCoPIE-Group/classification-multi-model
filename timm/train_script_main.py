@@ -681,10 +681,10 @@ def training_main(args_ai):
             if args.distributed and hasattr(loader_train.sampler, 'set_epoch'):
                 loader_train.sampler.set_epoch(epoch)
 
-            train_metrics = train_one_epoch(
-                epoch, model, loader_train, optimizer, train_loss_fn, args,
-                lr_scheduler=lr_scheduler, saver=saver, output_dir=output_dir,
-                amp_autocast=amp_autocast, loss_scaler=loss_scaler, model_ema=model_ema, mixup_fn=mixup_fn)
+            # train_metrics = train_one_epoch(
+            #     epoch, model, loader_train, optimizer, train_loss_fn, args,
+            #     lr_scheduler=lr_scheduler, saver=saver, output_dir=output_dir,
+            #     amp_autocast=amp_autocast, loss_scaler=loss_scaler, model_ema=model_ema, mixup_fn=mixup_fn)
 
             if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
                 if args.local_rank == 0:
@@ -708,10 +708,10 @@ def training_main(args_ai):
             # CPL.update_lr(optimizer, epoch, args)
             # Cocopie end
 
-            if output_dir is not None:
-                update_summary(
-                    epoch, train_metrics, eval_metrics, os.path.join(output_dir, 'summary.csv'),
-                    write_header=best_metric is None, log_wandb=args.log_wandb and has_wandb)
+            # if output_dir is not None:
+                # update_summary(
+                #     epoch, train_metrics, eval_metrics, os.path.join(output_dir, 'summary.csv'),
+                #     write_header=best_metric is None, log_wandb=args.log_wandb and has_wandb)
 
             if saver is not None:
                 # save proper checkpoint with eval metric
