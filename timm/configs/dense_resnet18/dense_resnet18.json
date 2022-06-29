@@ -30,7 +30,10 @@
         "weight_decay": 2e-5,
         "model_ema": false,
         "warmup_epochs": 3,
-        "warmup_lr": 0.0001
+        "warmup_lr": 0.0001,
+        "mixup": 0.0,
+        "cutmix": 0.0,
+        "bce_loss": false
     },
     "general": {
         "work_place": "resnet18",
