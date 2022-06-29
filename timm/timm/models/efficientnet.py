@@ -474,7 +474,7 @@ class EfficientNet(nn.Module):
     def __init__(
             self, block_args, num_classes=1000, num_features=1280, in_chans=3, stem_size=32, fix_stem=False,
             output_stride=32, pad_type='', round_chs_fn=round_channels, act_layer=None, norm_layer=None,
-            se_layer=None, drop_rate=0., drop_path_rate=0., global_pool='avg'):
+            se_layer=None, drop_rate=0., drop_path_rate=0., global_pool='avg', width_multiplier=1.0, depth_multiplier=1.0):
         super(EfficientNet, self).__init__()
         act_layer = act_layer or nn.ReLU
         norm_layer = norm_layer or nn.BatchNorm2d
@@ -1388,8 +1388,15 @@ def efficientnet_b0_c07(pretrained=False, **kwargs):
 def efficientnet_b0(pretrained=False, **kwargs):
     """ EfficientNet-B0 """
     # NOTE for train, drop_rate should be 0.2, drop_path_rate should be 0.2
+    width_multiplier, depth_multiplier = 1.0, 1.0
+    if 'width_multiplier' in kwargs:
+        width_multiplier = kwargs['width_multiplier']
+    if 'depth_multiplier' in kwargs:
+        depth_multiplier = kwargs['depth_multiplier']
+
     model = _gen_efficientnet(
-        'efficientnet_b0', channel_multiplier=1.0, depth_multiplier=1.0, pretrained=pretrained, **kwargs)
+        'efficientnet_b0', channel_multiplier=width_multiplier, depth_multiplier=depth_multiplier,
+        pretrained=pretrained, **kwargs)
     return model
 
 

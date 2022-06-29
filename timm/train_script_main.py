@@ -425,7 +425,9 @@ def training_main(args_ai):
         global_pool=args.gp,
         bn_momentum=args.bn_momentum,
         bn_eps=args.bn_eps,
-        scriptable=args.torchscript)
+        scriptable=args.torchscript,
+        depth_multiplier=args.depth_multiplier,
+        width_multiplier=args.width_multiplier)
 
     xgen_load(model, args_ai=args_ai)
 
