@@ -2,11 +2,11 @@
     "origin": {
         "common_train_epochs": 100,
 
-        "train_data_path": "/home/tmp00047/test_effnet/imagenet",
+        "train_data_path": "/mnt/data/imagenet",
         "train_label_path": null,
-        "eval_data_path": "/home/tmp00047/test_effnet/imagenet",
+        "eval_data_path": "/mnt/data/imagenet",
         "eval_label_path": null,
-        "pretrain_model_weights_path": "./resnet18/resnet18-5c106cde.pth",
+        "pretrain_model_weights_path": "./pretrained/resnet18-5c106cde.pth",
 
         "model": "resnet18",
         "width_multiplier": null,
