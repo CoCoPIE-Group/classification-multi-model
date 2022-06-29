@@ -24,7 +24,7 @@
         "split_bn": true,
         "seed": 0,
         "reprob": 0.6,
-        "workers": 8,
+        "workers": 4,
         "drop": 0.0,
         "drop_path": null,
         "opt": "sgd",
