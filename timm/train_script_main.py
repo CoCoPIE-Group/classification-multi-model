@@ -254,10 +254,10 @@ group.add_argument('--mixup-mode', type=str, default='batch',
                     help='How to apply mixup/cutmix params. Per "batch", "pair", or "elem"')
 group.add_argument('--mixup-off-epoch', default=0, type=int, metavar='N',
                     help='Turn off mixup after this epoch, disabled if 0 (default: 0)')
-# group.add_argument('--smoothing', type=float, default=0.1,
-#                     help='Label smoothing (default: 0.1)')
-# group.add_argument('--train-interpolation', type=str, default='random',
-#                     help='Training interpolation (random, bilinear, bicubic default: "random")')
+group.add_argument('--smoothing', type=float, default=0.1,
+                    help='Label smoothing (default: 0.1)')
+group.add_argument('--train-interpolation', type=str, default='random',
+                    help='Training interpolation (random, bilinear, bicubic default: "random")')
 # group.add_argument('--drop', type=float, default=0.0, metavar='PCT',
 #                     help='Dropout rate (default: 0.)')
 group.add_argument('--drop-connect', type=float, default=None, metavar='PCT',
