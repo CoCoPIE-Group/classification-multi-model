@@ -224,10 +224,10 @@ group.add_argument('--color-jitter', type=float, default=0.4, metavar='PCT',
 #                     help='Use AutoAugment policy. "v0" or "original". (default: None)'),
 group.add_argument('--aug-repeats', type=float, default=0,
                     help='Number of augmentation repetitions (distributed training only) (default: 0)')
-group.add_argument('--aug-splits', type=int, default=0,
-                    help='Number of augmentation splits (default: 0, valid: 0 or >=2)')
-group.add_argument('--jsd-loss', action='store_true', default=False,
-                    help='Enable Jensen-Shannon Divergence + CE loss. Use with `--aug-splits`.')
+# group.add_argument('--aug-splits', type=int, default=0,
+#                     help='Number of augmentation splits (default: 0, valid: 0 or >=2)')
+# group.add_argument('--jsd-loss', action='store_true', default=False,
+#                     help='Enable Jensen-Shannon Divergence + CE loss. Use with `--aug-splits`.')
 # group.add_argument('--bce-loss', action='store_true', default=False,
 #                     help='Enable BCE loss w/ Mixup/CutMix use.')
 group.add_argument('--bce-target-thresh', type=float, default=None,
@@ -238,8 +238,8 @@ group.add_argument('--bce-target-thresh', type=float, default=None,
 #                     help='Random erase mode (default: "pixel")')
 group.add_argument('--recount', type=int, default=1,
                     help='Random erase count (default: 1)')
-group.add_argument('--resplit', action='store_true', default=False,
-                    help='Do not random erase first (clean) augmentation split')
+# group.add_argument('--resplit', action='store_true', default=False,
+#                     help='Do not random erase first (clean) augmentation split')
 # group.add_argument('--mixup', type=float, default=0.0,
 #                     help='mixup alpha, mixup enabled if > 0. (default: 0.)')
 # group.add_argument('--cutmix', type=float, default=0.0,
@@ -275,10 +275,10 @@ group.add_argument('--bn-eps', type=float, default=None,
                     help='BatchNorm epsilon override (if not None)')
 group.add_argument('--sync-bn', action='store_true',
                     help='Enable NVIDIA Apex or Torch synchronized BatchNorm.')
-group.add_argument('--dist-bn', type=str, default='reduce',
-                    help='Distribute BatchNorm stats between nodes after each epoch ("broadcast", "reduce", or "")')
-group.add_argument('--split-bn', action='store_true',
-                    help='Enable separate BN layers per augmentation split.')
+# group.add_argument('--dist-bn', type=str, default='reduce',
+#                     help='Distribute BatchNorm stats between nodes after each epoch ("broadcast", "reduce", or "")')
+# group.add_argument('--split-bn', action='store_true',
+#                     help='Enable separate BN layers per augmentation split.')
 
 # Model Exponential Moving Average
 group = parser.add_argument_group('Model exponential moving average parameters')
