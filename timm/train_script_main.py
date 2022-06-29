@@ -15,10 +15,10 @@ NVIDIA CUDA specific speedups adopted from NVIDIA Apex examples
 Hacked together by / Copyright 2020 Ross Wightman (https://github.com/rwightman)
 """
 import argparse
-import copy
 import time
-import yaml
+import copy
 import json
+import yaml
 import os
 import logging
 from collections import OrderedDict
@@ -64,12 +64,9 @@ except ImportError:
     has_wandb = False
 
 from third_party.co_lib.co_lib import Co_Lib as CL
-# import third_party.prune_lib as CPL
 from timm.utils.prune_util import print_sparsity
 
-# from xgen_tools import *
-from third_party.toolchain.model_train.xgen_tools.model_train_tools import *
-# from xgen_tools import *
+from xgen_tools import xgen_record, xgen_init, xgen_load, XgenArgs,xgen
 
 from timm.utils.torch_utils import de_parallel
 
@@ -83,7 +80,6 @@ _logger = logging.getLogger('train')
 config_parser = argparse.ArgumentParser(description='Training Config', add_help=False)
 config_parser.add_argument('-c', '--config', default='', type=str, metavar='FILE',
                     help='YAML config file specifying default arguments')
-
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 
@@ -150,8 +146,8 @@ group = parser.add_argument_group('Optimizer parameters')
 #                     help='Optimizer (default: "sgd"')
 # group.add_argument('--opt-eps', default=None, type=float, metavar='EPSILON',
 #                     help='Optimizer Epsilon (default: None, use opt default)')
-group.add_argument('--opt-betas', default=None, type=float, nargs='+', metavar='BETA',
-                    help='Optimizer Betas (default: None, use opt default)')
+# group.add_argument('--opt-betas', default=None, type=float, nargs='+', metavar='BETA',
+#                     help='Optimizer Betas (default: None, use opt default)')
 group.add_argument('--momentum', type=float, default=0.9, metavar='M',
                     help='Optimizer momentum (default: 0.9)')
 # group.add_argument('--weight-decay', type=float, default=2e-5,
@@ -426,16 +422,14 @@ def training_main(args_ai):
         bn_momentum=args.bn_momentum,
         bn_eps=args.bn_eps,
         scriptable=args.torchscript,
-        depth_multiplier=args.depth_multiplier,
-        width_multiplier=args.width_multiplier)
+        # checkpoint_path=args.initial_checkpoint,
+        depth_multiplier=args.depth_multiplier)
 
     xgen_load(model, args_ai=args_ai)
 
     if args.num_classes is None:
         assert hasattr(model, 'num_classes'), 'Model must have `num_classes` attr if not set on cmd line/config.'
-        args.num_classes = model.num_classes
-
-    print(model)
+        args.num_classes = model.num_classes  # FIXME handle model default vs config num_classes more elegantly
 
     if args.grad_checkpointing:
         model.set_grad_checkpointing(enable=True)
@@ -533,7 +527,6 @@ def training_main(args_ai):
 
     # setup learning rate schedule and starting epoch
     lr_scheduler, num_epochs = create_scheduler(args, optimizer)
-
     start_epoch = 0
     if args.start_epoch is not None:
         # a specified start_epoch will always override the resume epoch
@@ -554,7 +547,7 @@ def training_main(args_ai):
         batch_size=args.batch_size,
         repeats=args.epoch_repeats)
     dataset_eval = create_dataset(
-        args.dataset, root=args.eval_data_path, split=args.val_split, is_training=False,
+        args.dataset, root=args.train_data_path, split=args.val_split, is_training=False,
         class_map=args.class_map,
         download=args.dataset_download,
         batch_size=args.batch_size)
@@ -699,6 +692,7 @@ def training_main(args_ai):
                 distribute_bn(model, args.world_size, args.dist_bn == 'reduce')
 
             eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
+
             if model_ema and not args.model_ema_force_cpu:
                 if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
                     distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
@@ -726,20 +720,18 @@ def training_main(args_ai):
                 best_metric, best_epoch = saver.save_checkpoint(epoch, metric=save_metric)
 
             if model_ema:
-                if hasattr(model_ema, 'module'):
-                    print(f'saving model, ema: {model_ema is not None}')
-                    xgen_record(args_ai, model_ema.module, eval_metrics[eval_metric], epoch=epoch)
-                else:
-                    xgen_record(args_ai, model_ema, eval_metrics[eval_metric], epoch=epoch)
+                model_dummy = de_parallel(copy.deepcopy(model_ema))
+                xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=epoch)
             else:
-                if hasattr(model, 'module'):
-                    print(f'saving model, ema: {model_ema is not None}')
-                    xgen_record(args_ai, model.module, eval_metrics[eval_metric], epoch=epoch)
-                else:
-                    xgen_record(args_ai, model, eval_metrics[eval_metric], epoch=epoch)
+                model_dummy = de_parallel(copy.deepcopy(model))
+                xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=epoch)
+
+            del model_dymmy
 
     except KeyboardInterrupt:
         pass
+    if best_metric is not None:
+        _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
 
     eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
     if model_ema and not args.model_ema_force_cpu:
@@ -758,9 +750,6 @@ def training_main(args_ai):
         xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=-1)
 
     del model_dymmy
-
-    if best_metric is not None:
-        _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
 
 def train_one_epoch(
         epoch, model, loader, optimizer, loss_fn, args,
@@ -939,7 +928,5 @@ def validate(model, loader, loss_fn, args, amp_autocast=suppress, log_suffix='')
 
 
 if __name__ == '__main__':
-    # task_json = 'configs/dense_effnetb0/dense_resnet18.json'
-    # args_ai = json.load(open(task_json,'r'))
     args_ai = None
     training_main(args_ai)
