@@ -75,8 +75,8 @@
        "accuracy": null,
        "latency": 30,
        "margin": 2,
-       "searching_variable": null,
-       "searching_range": null,
+       "searching_variable": ["sp_prune_ratios"],
+       "searching_range": [0, 1],
        "searching_step_size": null
    },
     "compiler": {

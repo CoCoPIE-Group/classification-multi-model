@@ -32,3 +32,4 @@ def run(onnx_path, quantized, pruning, output_path, **kwargs):
 
 if __name__ == '__main__':
     xgen(training_main, run, xgen_config_path="./configs/dense_resnet18/dense_resnet18.json", xgen_mode='pruning')
+
