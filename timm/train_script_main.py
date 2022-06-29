@@ -63,7 +63,7 @@ try:
 except ImportError:
     has_wandb = False
 
-from third_party.co_lib.co_lib import Co_Lib as CL
+from co_lib import Co_Lib as CL
 from timm.utils.prune_util import print_sparsity
 
 from xgen_tools import xgen_record, xgen_init, xgen_load, XgenArgs,xgen

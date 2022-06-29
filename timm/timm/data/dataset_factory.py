@@ -4,7 +4,7 @@ Hacked together by / Copyright 2021, Ross Wightman
 """
 import os
 
-from torchvision.datasets import CIFAR100, CIFAR10, MNIST, QMNIST, KMNIST, FashionMNIST, ImageNet, ImageFolder
+from torchvision.datasets import CIFAR100, CIFAR10, MNIST, FashionMNIST, ImageFolder
 try:
     from torchvision.datasets import Places365
     has_places365 = True
@@ -22,8 +22,6 @@ _TORCH_BASIC_DS = dict(
     cifar10=CIFAR10,
     cifar100=CIFAR100,
     mnist=MNIST,
-    qmist=QMNIST,
-    kmnist=KMNIST,
     fashion_mnist=FashionMNIST,
 )
 _TRAIN_SYNONYM = {'train', 'training'}
