@@ -360,6 +360,8 @@ def training_main(args_ai):
 
     args = xgen_init(args, args_ai)
 
+    print(args.width_multiplier)
+
     print(f'args: {args}')
     print(f'args_text: {args_text}')
 
@@ -423,6 +425,7 @@ def training_main(args_ai):
         bn_eps=args.bn_eps,
         scriptable=args.torchscript,
         # checkpoint_path=args.initial_checkpoint,
+        width_multiplier=args.width_multiplier,
         depth_multiplier=args.depth_multiplier)
 
     xgen_load(model, args_ai=args_ai)
