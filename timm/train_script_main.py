@@ -64,11 +64,9 @@ except ImportError:
     has_wandb = False
 
 from co_lib import Co_Lib as CL
-from timm.utils.prune_util import print_sparsity
-
 from xgen_tools import xgen_record, xgen_init, xgen_load, XgenArgs,xgen
 
-from timm.utils.torch_utils import de_parallel
+from timm.utils.torch_utils import print_sparsity, de_parallel
 
 COCOPIE_MAP = {}
 
