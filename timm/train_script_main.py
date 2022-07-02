@@ -524,8 +524,7 @@ def training_main(args_ai):
             if args.local_rank == 0:
                 _logger.info("Using native Torch DistributedDataParallel.")
             model = NativeDDP(model, device_ids=[args.local_rank], broadcast_buffers=not args.no_ddp_bb)
-
-    if torch.cuda.device_count() > 1 and args.gpu_ids:
+    elif torch.cuda.device_count() > 1 and args.gpu_ids:
         model = torch.nn.DataParallel(model, device_ids=args.gpu_ids)
 
     # NOTE: EMA model does not need to be wrapped by DDP

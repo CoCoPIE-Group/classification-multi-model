@@ -1,8 +1,8 @@
 {
   "origin": {
-    "train_data_path": "/home/tmp00047/test_effnet/imagenet",
+    "train_data_path": "/mnt/data/imagenet",
     "train_label_path": null,
-    "eval_data_path": "/home/tmp00047/test_effnet/imagenet",
+    "eval_data_path": "/mnt/data/imagenet",
     "eval_label_path": null,
     "common_learning_rate": 0.001,
     "common_train_epochs": 400,
@@ -41,7 +41,7 @@
     "split_bn": false,
     "resplit": false,
     "jsd_loss": false,
-    "gpu_ids": [0,1,2,3,4,5,6,7]
+    "gpu_ids": null
   },
   "general": {
     "user_id": "test",
