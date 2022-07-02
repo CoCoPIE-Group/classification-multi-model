@@ -1,0 +1,31 @@
+{
+  "prune": {
+    "ADMM": false,
+    "Magnitude": false,
+    "sparsity_type": "block_punched",
+    "sp_admm_lr": 0.01,
+    "sp_admm_block": "(8,4)",
+    "sp_admm_update_epoch": 5,
+    "sp_admm_rho": 0.001,
+    "sp_prune_ratios": 0.5,
+    "sp_config_file": null,
+    "sp_prune_threshold": -1.0,
+    "sp_global_weight_sparsity": false
+  },
+  "quantization": {
+    "AimetQt": true,
+    "qat": true,
+    "fold_layers": true,
+    "cross_layer_equalization": false,
+    "bias_correction": true,
+    "rounding_mode": "nearest",
+    "num_quant_samples": 1000,
+    "num_bias_correct_samples": 1000,
+    "weight_bw": 8,
+    "act_bw": 8,
+    "quant_scheme": "tf_enhanced",
+    "layers_to_ignore": [],
+    "auto_add_bias": true,
+    "perform_only_empirical_bias_corr": true
+  }
+}

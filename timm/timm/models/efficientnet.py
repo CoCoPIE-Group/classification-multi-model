@@ -1391,8 +1391,10 @@ def efficientnet_b0(pretrained=False, **kwargs):
     width_multiplier, depth_multiplier = 1.0, 1.0
     if 'width_multiplier' in kwargs:
         width_multiplier = kwargs['width_multiplier']
+        del kwargs['width_multiplier']
     if 'depth_multiplier' in kwargs:
         depth_multiplier = kwargs['depth_multiplier']
+        del kwargs['depth_multiplier']
 
     model = _gen_efficientnet(
         'efficientnet_b0', channel_multiplier=width_multiplier, depth_multiplier=depth_multiplier,
@@ -1445,10 +1447,17 @@ def efficientnet_b3a(pretrained=False, **kwargs):
 def efficientnet_b4(pretrained=False, **kwargs):
     """ EfficientNet-B4 """
     # NOTE for train, drop_rate should be 0.4, drop_path_rate should be 0.2
-    model = _gen_efficientnet(
-        'efficientnet_b4', channel_multiplier=1.4, depth_multiplier=1.8, pretrained=pretrained, **kwargs)
-    return model
+    width_multiplier, depth_multiplier = 1.4, 1.8
+    if 'width_multiplier' in kwargs:
+        width_multiplier = kwargs['width_multiplier']
+        del kwargs['width_multiplier']
+    if 'depth_multiplier' in kwargs:
+        depth_multiplier = kwargs['depth_multiplier']
+        del kwargs['depth_multiplier']
 
+    model = _gen_efficientnet(
+        'efficientnet_b4', pretrained=pretrained, channel_multiplier=width_multiplier, depth_multiplier=depth_multiplier, **kwargs)
+    return model
 
 @register_model
 def efficientnet_b5(pretrained=False, **kwargs):

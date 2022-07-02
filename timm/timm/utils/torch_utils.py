@@ -296,16 +296,3 @@ def print_sparsity(model=None, show_sparse_only=False, compressed_view=False):
         sparsity = 1 - (num_nonzeros * 1.0) / total_num
         print("{}: {}, {}, {}, [{}]".format(name, str(num_nonzeros), str(total_num), non_zeros.shape, str(sparsity)))
 
-
-if __name__ == "__main__":
-    traindir = "/home/kai/code/YiChe/car"
-    # train_dataset = datasets.ImageFolder(
-    #     traindir,
-    #     transforms.Compose([
-    #         transforms.ToTensor(),
-    #     ]))
-    # train_mean, train_std = get_mean_and_std(train_dataset)
-    # print(f"mean: {train_mean}, std: {train_std}")
-
-    output_folder = "/home/kai/code/YiChe/split_crop"
-    split_train_val(traindir, output_folder)

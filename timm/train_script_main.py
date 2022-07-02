@@ -193,7 +193,7 @@ group.add_argument('--decay-milestones', default=[30, 60], type=int, nargs='+', 
 #                     help='epoch interval to decay LR')
 # group.add_argument('--warmup-epochs', type=int, default=3, metavar='N',
 #                     help='epochs to warmup LR, if scheduler supports')
-group.add_argument('--cooldown-epochs', type=int, default=10, metavar='N',
+group.add_argument('--cooldown-epochs', type=int, default=0, metavar='N',
                     help='epochs to cooldown LR at min_lr, after cyclic schedule ends')
 group.add_argument('--patience-epochs', type=int, default=10, metavar='N',
                     help='patience epochs for Plateau LR scheduler (default: 10')
@@ -358,7 +358,7 @@ def training_main(args_ai):
 
     args = xgen_init(args, args_ai)
 
-    print(args.width_multiplier)
+    print(f'width_multiplier: {args.width_multiplier}')
 
     print(f'args: {args}')
     print(f'args_text: {args_text}')
@@ -524,7 +524,11 @@ def training_main(args_ai):
             if args.local_rank == 0:
                 _logger.info("Using native Torch DistributedDataParallel.")
             model = NativeDDP(model, device_ids=[args.local_rank], broadcast_buffers=not args.no_ddp_bb)
-        # NOTE: EMA model does not need to be wrapped by DDP
+
+    if torch.cuda.device_count() > 1 and args.gpu_ids:
+        model = torch.nn.DataParallel(model, device_ids=args.gpu_ids)
+
+    # NOTE: EMA model does not need to be wrapped by DDP
 
     # setup learning rate schedule and starting epoch
     lr_scheduler, num_epochs = create_scheduler(args, optimizer)
@@ -694,12 +698,12 @@ def training_main(args_ai):
 
             eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
 
-            if model_ema and not args.model_ema_force_cpu:
-                if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
-                    distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
-                ema_eval_metrics = validate(
-                    model_ema.module, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast, log_suffix=' (EMA)')
-                eval_metrics = ema_eval_metrics
+            # if model_ema and not args.model_ema_force_cpu:
+            #     if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
+            #         distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
+            #     ema_eval_metrics = validate(
+            #         model_ema.module, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast, log_suffix=' (EMA)')
+            #     eval_metrics = ema_eval_metrics
 
             if lr_scheduler is not None:
                 # step LR for next epoch
@@ -721,36 +725,39 @@ def training_main(args_ai):
                 best_metric, best_epoch = saver.save_checkpoint(epoch, metric=save_metric)
 
             if model_ema:
-                model_dummy = de_parallel(copy.deepcopy(model_ema))
+                model_dummy = de_parallel(copy.deepcopy(model_ema.module)).cpu()
                 xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=epoch)
             else:
-                model_dummy = de_parallel(copy.deepcopy(model))
+                model_dummy = de_parallel(copy.deepcopy(model)).cpu()
                 xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=epoch)
 
-            del model_dymmy
+            del model_dummy
 
     except KeyboardInterrupt:
         pass
     if best_metric is not None:
         _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
 
-    eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
-    if model_ema and not args.model_ema_force_cpu:
-        if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
-            distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
-        ema_eval_metrics = validate(
-            model_ema.module, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast, log_suffix=' (EMA)')
-        eval_metrics = ema_eval_metrics
-    print(f'eval top-1: {eval_metrics[eval_metric]}')
+    epoch = -1
+    # eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
+    # if model_ema and not args.model_ema_force_cpu:
+    #     if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
+    #         distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
+    #     ema_eval_metrics = validate(
+    #         model_ema.module, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast, log_suffix=' (EMA)')
+    #     eval_metrics = ema_eval_metrics
+    # print(f'eval top-1: {eval_metrics[eval_metric]}')
 
     if model_ema:
-        model_dummy = de_parallel(copy.deepcopy(model_ema))
-        xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=-1)
+        model_dummy = copy.deepcopy(de_parallel(model_ema.module))
+        xgen_record(args_ai, model_dummy, 0.0, epoch=epoch)
     else:
-        model_dummy = de_parallel(copy.deepcopy(model))
-        xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=-1)
+        model_dummy = copy.deepcopy(de_parallel(model))
+        xgen_record(args_ai, model_dummy, 0.0, epoch=epoch)
 
-    del model_dymmy
+    del model_dummy
+
+    return args_ai
 
 def train_one_epoch(
         epoch, model, loader, optimizer, loss_fn, args,

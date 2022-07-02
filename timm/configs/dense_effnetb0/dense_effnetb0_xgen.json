@@ -24,7 +24,7 @@
         "weight_decay": 1e-5,
         "drop": 0.2,
         "drop_path": 0.2,
-        "model_ema": false,
+        "model_ema": true,
         "model_ema_decay": 0.9999,
         "aa": "rand-m9-mstd0.5",
         "remode": "pixel",
@@ -67,18 +67,18 @@
     },
     "task": {
         "pretrained_model_path": null,
-        "max_searching": 3
+        "max_searching": 10
     },
    "user_requirements": {
-       "accuracy": 74.59,
-       "latency": null,
+       "accuracy": null,
+       "latency": 10.263,
        "margin": 0.1,
-       "searching_variable": ["width_multiplier"],
-       "searching_range": [0, 1],
+       "searching_variable": "width_multiplier",
+       "searching_range": [0.1, 1.0],
        "searching_step_size": null
    },
     "compiler": {
        "input_shape": "(1,3,224,224)",
-        "devices": ["dev"]
+        "devices": ["R38M20BDTME"]
    }
 }
