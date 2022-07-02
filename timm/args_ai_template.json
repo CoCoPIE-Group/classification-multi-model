@@ -13,7 +13,7 @@
     "model": "efficientnet_b4",
     "width_multiplier": 0.331147113586458,
     "depth_multiplier": 1.8,
-    "batch_size": 192,
+    "batch_size": 256,
     "sched": "step",
     "crop_pct": null,
     "decay_epochs": 2.4,
@@ -40,7 +40,8 @@
     "aug_splits": 0,
     "split_bn": false,
     "resplit": false,
-    "jsd_loss": false
+    "jsd_loss": false,
+    "gpu_ids": [0,1,2,3,4,5,6,7]
   },
   "general": {
     "user_id": "test",
