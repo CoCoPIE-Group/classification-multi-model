@@ -38,7 +38,8 @@
         "aug_splits": 0,
         "split_bn": false,
         "resplit": false,
-        "jsd_loss": false
+        "jsd_loss": false,
+        "dist_bn": false
     },
     "general": {
         "work_place": "effnetb0",

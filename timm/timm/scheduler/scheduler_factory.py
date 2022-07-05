@@ -10,10 +10,10 @@ from .tanh_lr import TanhLRScheduler
 
 
 def create_scheduler(args, optimizer):
-    if hasattr(args, "common_train_epochs"):
-        num_epochs = args.common_train_epochs
-    elif hasattr(args, "epochs"):
-        num_epochs = args.epochs
+    # if hasattr(args, "common_train_epochs"):
+    #     num_epochs = args.common_train_epochs
+    # elif hasattr(args, "epochs"):
+    num_epochs = args.epochs
 
     if getattr(args, 'lr_noise', None) is not None:
         lr_noise = getattr(args, 'lr_noise')

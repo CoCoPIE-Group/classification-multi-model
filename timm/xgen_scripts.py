@@ -31,5 +31,6 @@ from cocogen import run
 #     return res
 
 if __name__ == '__main__':
-    xgen(training_main, run, xgen_config_path="./configs/dense_effnetb4/dense_xgen.json", xgen_mode='scaling')
+    # xgen(training_main, run, xgen_config_path="./configs/dense_effnetb4/dense_xgen.json", xgen_mode='scaling')
+    xgen(training_main, run, xgen_config_path="./configs/dense_resnet50/dense_xgen.json", xgen_mode='pruning')
 

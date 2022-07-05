@@ -68,7 +68,7 @@ from xgen_tools import xgen_record, xgen_init, xgen_load, XgenArgs,xgen
 
 from timm.utils.torch_utils import print_sparsity, de_parallel
 
-COCOPIE_MAP = {}
+COCOPIE_MAP = {'epochs': XgenArgs.cocopie_train_epochs}
 
 torch.backends.cudnn.benchmark = True
 _logger = logging.getLogger('train')
@@ -181,8 +181,8 @@ group.add_argument('--lr-k-decay', type=float, default=1.0,
 #                     help='warmup learning rate (default: 0.0001)')
 group.add_argument('--min-lr', type=float, default=1e-6, metavar='LR',
                     help='lower lr bound for cyclic schedulers that hit 0 (1e-5)')
-group.add_argument('--epochs', type=int, default=300, metavar='N',
-                    help='number of epochs to train (default: 300)')
+# group.add_argument('--epochs', type=int, default=300, metavar='N',
+#                     help='number of epochs to train (default: 300)')
 group.add_argument('--epoch-repeats', type=float, default=0., metavar='N',
                     help='epoch repeat multiplier (number of times to repeat dataset epoch per train epoch).')
 group.add_argument('--start-epoch', default=None, type=int, metavar='N',
@@ -356,9 +356,10 @@ def training_main(args_ai):
     if args_ai is None:
         args_ai = args_ai_cfg
 
-    args = xgen_init(args, args_ai)
+    args = xgen_init(args, args_ai, COCOPIE_MAP)
 
-    print(f'width_multiplier: {args.width_multiplier}')
+    if hasattr(args, 'width_multiplier'):
+        print(f'width_multiplier: {args.width_multiplier}')
 
     print(f'args: {args}')
     print(f'args_text: {args_text}')
@@ -423,8 +424,8 @@ def training_main(args_ai):
         bn_eps=args.bn_eps,
         scriptable=args.torchscript,
         # checkpoint_path=args.initial_checkpoint,
-        width_multiplier=args.width_multiplier,
-        depth_multiplier=args.depth_multiplier)
+        width_multiplier=args.width_multiplier if hasattr(args, "width_multiplier") else None,
+        depth_multiplier=args.depth_multiplier if hasattr(args, "depth_multiplier") else None)
 
     xgen_load(model, args_ai=args_ai)
 
@@ -530,6 +531,8 @@ def training_main(args_ai):
     # NOTE: EMA model does not need to be wrapped by DDP
 
     # setup learning rate schedule and starting epoch
+    if args.epochs <= 0:  # TODO: delete
+        args.epochs = 1
     lr_scheduler, num_epochs = create_scheduler(args, optimizer)
     start_epoch = 0
     if args.start_epoch is not None:
@@ -725,6 +728,7 @@ def training_main(args_ai):
 
             if model_ema:
                 model_dummy = de_parallel(copy.deepcopy(model_ema.module)).cpu()
+
                 xgen_record(args_ai, model_dummy, eval_metrics[eval_metric], epoch=epoch)
             else:
                 model_dummy = de_parallel(copy.deepcopy(model)).cpu()
@@ -862,6 +866,8 @@ def train_one_epoch(
             lr_scheduler.step_update(num_updates=num_updates, metric=losses_m.avg)
 
         end = time.time()
+
+        break   # TODO: delete
         # end for
 
     if hasattr(optimizer, 'sync_lookahead'):
@@ -929,15 +935,17 @@ def validate(model, loader, loss_fn, args, amp_autocast=suppress, log_suffix='')
                         log_name, batch_idx, last_idx, batch_time=batch_time_m,
                         loss=losses_m, top1=top1_m, top5=top5_m))
 
+            break  # TODO: delete
+
     metrics = OrderedDict([('loss', losses_m.avg), ('top1', top1_m.avg), ('top5', top5_m.avg)])
 
     return metrics
 
 
 if __name__ == '__main__':
-    json_path = 'args_ai_template.json'
-    args_ai = json.load(open(json_path, 'r'))
-    args_ai['origin']["pretrain_model_weights_path"] = None
-    training_main(args_ai)
-    # args_ai = None
+    # json_path = 'args_ai_template.json'
+    # args_ai = json.load(open(json_path, 'r'))
+    # args_ai['origin']["pretrain_model_weights_path"] = None
     # training_main(args_ai)
+    args_ai = None
+    training_main(args_ai)
