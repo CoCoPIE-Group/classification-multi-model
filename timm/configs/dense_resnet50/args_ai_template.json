@@ -12,7 +12,7 @@
     "pretrain_model_weights_path": "./pretrained/e2bd1365-aff4-47c7-aed6-1b477d7da380.pth",
     "model": "resnet50",
     "amp": true,
-    "batch_size": 64,
+    "batch_size": 128,
     "lr": 0.05,
     "sched": "cosine",
     "resplit": true,
