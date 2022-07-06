@@ -9,7 +9,7 @@
 
         "model": "resnet18",
         "amp": true,
-        "batch_size": 192,
+        "batch_size": 64,
         "lr": 0.05,
         "sched": "cosine",
         "resplit": true,
@@ -66,12 +66,12 @@
         "sp_prune_threshold": -1.0
     },
     "task": {
-        "pretrain_model_weights_path": "./pretrained/resnet18-5c106cde.pth",
+        "pretrain_model_weights_path": null,
         "max_searching": 10
     },
    "user_requirements": {
        "accuracy": null,
-       "latency": 12.14,
+       "latency": 10.994,
        "margin": 0.1,
        "searching_variable": null,
        "searching_range": null,

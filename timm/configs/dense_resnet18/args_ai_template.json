@@ -20,7 +20,7 @@
     "aa": "rand-m9-mstd0.5-inc1",
     "remode": "pixel",
     "jsd_loss": true,
-    "dist_bn": true,
+    "dist_bn": "reduce",
     "split_bn": true,
     "seed": 0,
     "reprob": 0.6,
