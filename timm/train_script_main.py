@@ -946,7 +946,7 @@ def validate(model, loader, loss_fn, args, amp_autocast=suppress, log_suffix='')
 
 
 if __name__ == '__main__':
-    # json_path = 'args_ai_template_uniform.json'
+    # json_path = 'args_ai_template.json'
     # args_ai = json.load(open(json_path, 'r'))
     # args_ai['origin']["pretrain_model_weights_path"] = None
     # training_main(args_ai)
