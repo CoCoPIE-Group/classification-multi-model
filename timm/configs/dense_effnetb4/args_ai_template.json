@@ -1,0 +1,217 @@
+{
+  "origin": {
+    "train_data_path": "/mnt/data/imagenet",
+    "train_label_path": null,
+    "eval_data_path": "/mnt/data/imagenet",
+    "eval_label_path": null,
+    "common_learning_rate": 0.001,
+    "common_train_epochs": 400,
+    "common_eval_epochs": 1,
+    "common_train_batch_size": 1,
+    "root_path": "./Xgen/",
+    "pretrain_model_weights_path": null,
+    "model": "efficientnet_b4",
+    "width_multiplier": 0.331147113586458,
+    "depth_multiplier": 1.8,
+    "batch_size": 256,
+    "sched": "step",
+    "crop_pct": null,
+    "decay_epochs": 2.4,
+    "decay_rate": 0.97,
+    "opt": "rmsproptf",
+    "opt_eps": 0.001,
+    "warmup_epochs": 3,
+    "workers": 8,
+    "warmup_lr": 1e-06,
+    "weight_decay": 1e-05,
+    "drop": 0.2,
+    "drop_path": 0.2,
+    "model_ema": true,
+    "model_ema_decay": 0.9999,
+    "aa": "rand-m9-mstd0.5",
+    "remode": "pixel",
+    "seed": 0,
+    "reprob": 0.2,
+    "amp": true,
+    "lr": 0.048,
+    "mixup": 0.0,
+    "cutmix": 0.0,
+    "bce_loss": false,
+    "aug_splits": 0,
+    "split_bn": false,
+    "resplit": false,
+    "jsd_loss": false,
+    "dist_bn": false,
+    "gpu_ids": null
+  },
+  "general": {
+    "user_id": "test",
+    "work_place": "./effnetb4",
+    "tran_scripts_path": null
+  },
+  "prune": {
+    "sp_store_weights": null,
+    "sp_lars": false,
+    "sp_lars_trust_coef": 0.001,
+    "sp_backbone": false,
+    "sp_retrain": false,
+    "sp_admm": false,
+    "sp_admm_multi": false,
+    "sp_retrain_multi": false,
+    "sp_config_file": null,
+    "sp_subset_progressive": false,
+    "sp_admm_fixed_params": false,
+    "sp_no_harden": false,
+    "nv_sparse": false,
+    "sp_load_prune_params": null,
+    "sp_store_prune_params": null,
+    "generate_rand_seq_gap_yaml": false,
+    "sp_admm_update_epoch": 5,
+    "sp_admm_update_batch": null,
+    "sp_admm_rho": 0.001,
+    "sp_admm_sparsity_type": "block_punched",
+    "sp_admm_lr": 0.01,
+    "admm_debug": false,
+    "sp_global_weight_sparsity": false,
+    "sp_prune_threshold": -1.0,
+    "sp_block_irregular_sparsity": "(0,0)",
+    "sp_block_permute_multiplier": 2,
+    "sp_admm_block": "(8,4)",
+    "sp_admm_buckets_num": 16,
+    "sp_admm_elem_per_row": 1,
+    "sp_admm_tile": null,
+    "sp_admm_select_number": 4,
+    "sp_admm_pattern_row_sub": 1,
+    "sp_admm_pattern_col_sub": 4,
+    "sp_admm_data_format": null,
+    "sp_admm_do_not_permute_conv": false,
+    "sp_gs_output_v": null,
+    "sp_gs_output_ptr": null,
+    "sp_load_frozen_weights": null,
+    "retrain_mask_pattern": "weight",
+    "sp_update_init_method": "weight",
+    "sp_mask_update_freq": 10,
+    "retrain_mask_sparsity": -1.0,
+    "retrain_mask_seed": null,
+    "sp_prune_before_retrain": false,
+    "output_compressed_format": false,
+    "sp_grad_update": false,
+    "sp_grad_decay": 0.98,
+    "sp_grad_restore_threshold": -1,
+    "sp_global_magnitude": false,
+    "sp_pre_defined_mask_dir": null,
+    "sp_prune_ratios": 0,
+    "sparsity_type": "block_punched",
+    "train_epochs": 0
+  },
+  "quantization": {
+    "qt_aimet": false,
+    "qat": true,
+    "fold_layers": true,
+    "cross_layer_equalization": false,
+    "bias_correction": true,
+    "rounding_mode": "nearest",
+    "num_quant_samples": 1000,
+    "num_bias_correct_samples": 1000,
+    "weight_bw": 8,
+    "act_bw": 8,
+    "quant_scheme": "tf_enhanced",
+    "layers_to_ignore": [],
+    "auto_add_bias": true,
+    "perform_only_empirical_bias_corr": true
+  },
+  "task": {
+    "specific_scenarios": "BasicScaling",
+    "pretrained_model_path": null,
+    "state": {
+      "stage": 3,
+      "cycles": 0
+    },
+    "max_searching": 10,
+    "args_2": {
+      "searching_variable": "width_multiplier",
+      "searching_range": [
+        0.1,
+        1.4
+      ],
+      "searching_step_size": null,
+      "cycles": 10,
+      "searching_algorithm": "linear",
+      "linear_algorithm": "polyfit",
+      "polyfit_deg": 1,
+      "searching_n": 2,
+      "searching_minimum_difference": 0.01,
+      "update_args": {}
+    },
+    "args_1": {
+      "searching_variable": "width_multiplier",
+      "searching_range": [
+        0.1,
+        1.4
+      ],
+      "searching_step_size": null,
+      "cycles": 1
+    },
+    "args_3": {
+      "searching_variable": "width_multiplier",
+      "searching_range": [
+        0.1,
+        1.4
+      ],
+      "searching_step_size": null,
+      "cycles": 1,
+      "searching_n": 1,
+      "searching_minimum_difference": 0.01,
+      "update_args": {}
+    }
+  },
+  "user_requirements": {
+    "power": null,
+    "accuracy": null,
+    "accuracy_reverse_yn": 0,
+    "model_size": null,
+    "memory_size": null,
+    "latency": 10.304,
+    "margin": 0.1,
+    "target_type": "latency",
+    "searching_variable": "width_multiplier",
+    "searching_range": [
+      0.1,
+      1.4
+    ],
+    "searching_step_size": null
+  },
+  "train": {
+    "accuracy_reverse_yn": 0,
+    "common_save_best_yn": 1,
+    "trained_yn": true,
+    "log_save_folder": "logs",
+    "eval_dataset_id": null,
+    "training_dataset_id": null,
+    "uuid": "1c8b78a8-09ec-473d-8e1f-9fcdc8840e11",
+    "flops": "117.708M",
+    "params": "1.505M",
+    "global_sparsity": 0.014895455511083955,
+    "global_sparsity_prune_layer": 1.0,
+    "total_parameters": "1.535M",
+    "total_nz_parameters": "1.512M",
+    "accuracy_log": [
+      [
+        -1,
+        -1
+      ],
+      [
+        0.0,
+        -1
+      ]
+    ],
+    "accuracy": 0.0
+  },
+  "compiler": {
+    "input_shape": "(1,3,224,224)",
+    "opset_version": 11,
+    "devices": [
+      "R38M20BDTME"
+    ]
+  }
+}
