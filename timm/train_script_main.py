@@ -68,6 +68,8 @@ from xgen_tools import xgen_record, xgen_init, xgen_load, XgenArgs,xgen
 
 from timm.utils.torch_utils import print_sparsity, de_parallel
 
+from co_lib.utils import export_prune_sp_config_file
+
 COCOPIE_MAP = {'epochs': XgenArgs.cocopie_train_epochs}
 
 torch.backends.cudnn.benchmark = True
@@ -631,6 +633,7 @@ def training_main(args_ai):
     print(f'args: {args}')
     # xgen_load(model, args_ai=args_ai)
     CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train)
+    # export_prune_sp_config_file(CL, 'resnet18.yml')
     # CPL.init(args, model, optimizer)
     print_sparsity(model, show_sparse_only=True)
     # Cocopie end
