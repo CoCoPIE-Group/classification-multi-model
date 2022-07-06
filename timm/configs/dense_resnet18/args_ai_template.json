@@ -11,7 +11,7 @@
     "root_path": "./Xgen/",
     "model": "resnet18",
     "amp": true,
-    "batch_size": 64,
+    "batch_size": 128,
     "lr": 0.05,
     "sched": "cosine",
     "resplit": true,
