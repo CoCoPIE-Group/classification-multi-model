@@ -6,7 +6,7 @@
         "train_label_path": null,
         "eval_data_path": "/data/imagenet",
         "eval_label_path": null,
-        "pretrain_model_weights_path": "./effnetb0_c07/effnetb0_c07.pth",
+        "pretrain_model_weights_path": null,
 
         "model": "efficientnet_b0_c07",
         "width_multiplier": null,
