@@ -125,7 +125,7 @@
       "cycles": 0,
       "target_sp_prune_ratios": []
     },
-    "pretrain_model_weights_path": "./pretrained/resnet19-5c106cde.pth",
+    "pretrain_model_weights_path": "./pretrained/resnet18-5c106cde.pth",
     "max_searching": 10,
     "args_2": {
       "cycles": 10,
