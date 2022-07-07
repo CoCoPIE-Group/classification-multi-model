@@ -1,8 +1,8 @@
 {
   "origin": {
-    "train_data_path": "/data/imagenet/",
+    "train_data_path": "/data/imagenet",
     "train_label_path": null,
-    "eval_data_path": "/data/imagenet/",
+    "eval_data_path": "/data/imagenet",
     "eval_label_path": null,
     "common_learning_rate": 0.001,
     "common_train_epochs": 200,
@@ -39,7 +39,8 @@
     "model_ema_decay": 0.9998,
     "opt_betas": null,
     "opt_eps": null,
-    "gpu_ids": 0
+    "gpu_ids": 0,
+    "pretrain_model_weights_path": "./pretrained/resnet18-5c106cde.pth"
   },
   "general": {
     "user_id": "test",
@@ -125,7 +126,6 @@
       "cycles": 0,
       "target_sp_prune_ratios": []
     },
-    "pretrain_model_weights_path": "./pretrained/resnet18-5c106cde.pth",
     "max_searching": 10,
     "args_2": {
       "cycles": 10,
