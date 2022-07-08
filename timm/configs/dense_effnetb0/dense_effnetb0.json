@@ -6,7 +6,6 @@
         "train_label_path": null,
         "eval_data_path": "/home/tmp00047/test_effnet/imagenet",
         "eval_label_path": null,
-        "pretrain_model_weights_path": null,
 
         "model": "efficientnet_b0",
         "width_multiplier": 1.0,
@@ -39,7 +38,8 @@
         "split_bn": false,
         "resplit": false,
         "jsd_loss": false,
-        "dist_bn": false
+        "dist_bn": false,
+        "pretrain_model_weights_path": "./pretrained/efficientnet_b0_ra-3dd342df.pth"
     },
     "general": {
         "work_place": "effnetb0",

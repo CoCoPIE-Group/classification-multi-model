@@ -703,12 +703,12 @@ def training_main(args_ai):
 
             eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
 
-            # if model_ema and not args.model_ema_force_cpu:
-            #     if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
-            #         distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
-            #     ema_eval_metrics = validate(
-            #         model_ema.module, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast, log_suffix=' (EMA)')
-            #     eval_metrics = ema_eval_metrics
+            if model_ema and not args.model_ema_force_cpu:
+                if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
+                    distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
+                ema_eval_metrics = validate(
+                    model_ema.module, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast, log_suffix=' (EMA)')
+                eval_metrics = ema_eval_metrics
 
             if lr_scheduler is not None:
                 # step LR for next epoch
@@ -745,21 +745,21 @@ def training_main(args_ai):
         _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
 
     epoch = -1
-    # eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
-    # if model_ema and not args.model_ema_force_cpu:
-    #     if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
-    #         distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
-    #     ema_eval_metrics = validate(
-    #         model_ema.module, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast, log_suffix=' (EMA)')
-    #     eval_metrics = ema_eval_metrics
-    # print(f'eval top-1: {eval_metrics[eval_metric]}')
+    eval_metrics = validate(model, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast)
+    if model_ema and not args.model_ema_force_cpu:
+        if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
+            distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
+        ema_eval_metrics = validate(
+            model_ema.module, loader_eval, validate_loss_fn, args, amp_autocast=amp_autocast, log_suffix=' (EMA)')
+        eval_metrics = ema_eval_metrics
+    print(f'eval top-1: {eval_metrics[eval_metric]}')
 
     if model_ema:
         model_dummy = copy.deepcopy(de_parallel(model_ema.module))
-        xgen_record(args_ai, model_dummy, 0.0, epoch=epoch)
+        xgen_record(args_ai, model_dummy, float(eval_metrics[eval_metric]), epoch=epoch)
     else:
         model_dummy = copy.deepcopy(de_parallel(model))
-        xgen_record(args_ai, model_dummy, 0.0, epoch=epoch)
+        xgen_record(args_ai, model_dummy, float(eval_metrics[eval_metric]), epoch=epoch)
 
     del model_dummy
 
