@@ -13,7 +13,7 @@
     "model": "efficientnet_b0_c07",
     "width_multiplier": null,
     "depth_multiplier": null,
-    "batch_size": 128,
+    "batch_size": 384,
     "sched": "step",
     "crop_pct": null,
     "decay_epochs": 2.4,
