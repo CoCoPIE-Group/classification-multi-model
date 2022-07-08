@@ -1,6 +1,6 @@
 {
   "origin": {
-    "train_data_path": "/data/imagenet",
+    "train_data_path": "/home/tmp00047/test_effnet/imagenet",
     "train_label_path": null,
     "eval_data_path": "/data/imagenet",
     "eval_label_path": null,
@@ -15,12 +15,12 @@
     "lr": 3.3e-3,
     "sched": "cosine",
     "resplit": true,
-    "aug_splits": 3,
+    "aug_splits": 0,
     "aa": "rand-m7-n3-mstd1.0-inc1",
     "remode": "pixel",
-    "jsd_loss": true,
+    "jsd_loss": false,
     "dist_bn": "reduce",
-    "split_bn": true,
+    "split_bn": false,
     "seed": 0,
     "reprob": 0.35,
     "workers": 4,

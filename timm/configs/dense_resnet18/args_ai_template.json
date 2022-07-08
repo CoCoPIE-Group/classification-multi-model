@@ -2,7 +2,7 @@
   "origin": {
     "train_data_path": "/data/imagenet",
     "train_label_path": null,
-    "eval_data_path": "/data/imagenet",
+    "eval_data_path": "/data/imagenet/",
     "eval_label_path": null,
     "common_learning_rate": 0.001,
     "common_train_epochs": 200,
