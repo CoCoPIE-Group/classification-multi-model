@@ -870,7 +870,7 @@ def train_one_epoch(
 
         end = time.time()
 
-        # break   # TODO: delete
+        break   # TODO: delete
         # end for
 
     if hasattr(optimizer, 'sync_lookahead'):
