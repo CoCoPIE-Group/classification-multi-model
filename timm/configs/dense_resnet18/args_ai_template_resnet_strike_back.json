@@ -12,7 +12,7 @@
     "model": "resnet18",
     "amp": true,
     "batch_size": 192,
-    "lr": 3.3e-3,
+    "lr": 3.3e-4,
     "sched": "cosine",
     "resplit": true,
     "aug_splits": 0,

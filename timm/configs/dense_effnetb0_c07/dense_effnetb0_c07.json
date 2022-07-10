@@ -1,6 +1,6 @@
 {
   "origin": {
-    "train_data_path": "/data/imagenet",
+    "train_data_path": "/home/tmp00047/test_effnet/imagenet",
     "train_label_path": null,
     "eval_data_path": "/data/imagenet",
     "eval_label_path": null,
@@ -9,7 +9,6 @@
     "common_eval_epochs": 1,
     "common_train_batch_size": 1,
     "root_path": "./Xgen/",
-    "pretrain_model_weights_path": null,
     "model": "efficientnet_b0_c07",
     "width_multiplier": null,
     "depth_multiplier": null,
@@ -42,6 +41,7 @@
     "dist_bn": false,
     "resplit": false,
     "jsd_loss": false,
+    "pretrain_model_weights_path": "./pretrained/efficientnet_b0_c07.pth.tar",
     "gpu_ids": [
       0,
       1,

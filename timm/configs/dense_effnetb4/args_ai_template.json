@@ -188,7 +188,7 @@
     "log_save_folder": "logs",
     "eval_dataset_id": null,
     "training_dataset_id": null,
-    "uuid": "1c8b78a8-09ec-473d-8e1f-9fcdc8840e11",
+    "uuid": "effnetb4_xgen",
     "flops": "117.708M",
     "params": "1.505M",
     "global_sparsity": 0.014895455511083955,
