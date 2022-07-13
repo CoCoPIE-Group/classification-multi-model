@@ -12,7 +12,7 @@
     "model": "efficientnet_b0_c07",
     "width_multiplier": null,
     "depth_multiplier": null,
-    "batch_size": 384,
+    "batch_size": 64,
     "sched": "step",
     "crop_pct": null,
     "decay_epochs": 2.4,
@@ -41,7 +41,7 @@
     "dist_bn": false,
     "resplit": false,
     "jsd_loss": false,
-    "pretrain_model_weights_path": "./pretrained/efficientnet_b0_c07.pth.tar",
+    "pretrain_model_weights_path": "./effnetb0_c07_xgen/effnetb0_c07.pth",
     "gpu_ids": [
       0,
       1,

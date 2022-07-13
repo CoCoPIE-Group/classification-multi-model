@@ -427,7 +427,8 @@ def training_main(args_ai):
         scriptable=args.torchscript,
         # checkpoint_path=args.initial_checkpoint,
         width_multiplier=args.width_multiplier if hasattr(args, "width_multiplier") else None,
-        depth_multiplier=args.depth_multiplier if hasattr(args, "depth_multiplier") else None)
+        depth_multiplier=args.depth_multiplier if hasattr(args, "depth_multiplier") else None,
+        scaling_factor=args.scaling_factor if hasattr(args, "scaling_factor") else None)
 
     xgen_load(model, args_ai=args_ai)
 

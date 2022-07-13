@@ -597,7 +597,7 @@ class ResNet(nn.Module):
             self, block, layers, num_classes=1000, in_chans=3, output_stride=32, global_pool='avg',
             cardinality=1, base_width=64, stem_width=64, stem_type='', replace_stem_pool=False, block_reduce_first=1,
             down_kernel_size=1, avg_down=False, act_layer=nn.ReLU, norm_layer=nn.BatchNorm2d, aa_layer=None,
-            drop_rate=0.0, drop_path_rate=0., drop_block_rate=0., zero_init_last=True, block_args=None):
+            drop_rate=0.0, drop_path_rate=0., drop_block_rate=0., zero_init_last=True, block_args=None, scaling_factor=None):
         super(ResNet, self).__init__()
         block_args = block_args or dict()
         assert output_stride in (8, 16, 32)
@@ -727,7 +727,19 @@ def _create_resnet(variant, pretrained=False, **kwargs):
 def resnet18(pretrained=False, **kwargs):
     """Constructs a ResNet-18 model.
     """
-    model_args = dict(block=BasicBlock, layers=[2, 2, 2, 2], **kwargs)
+    # scaling factor
+    # 2 - resnet18
+    # 6 - resnet50
+    # 23 - resent101
+    net_size = [2, 2, 2, 2]
+    if 'scaling_factor' in kwargs:
+        scaling_factor = kwargs['scaling_factor']
+        net_size[0] = 2 if scaling_factor < 6 else 3
+        net_size[1] = 2 if scaling_factor < 6 else 4
+        net_size[2] = scaling_factor
+        net_size[3] = 2 if scaling_factor < 6 else 3
+
+    model_args = dict(block=BasicBlock, layers=net_size, **kwargs)
     return _create_resnet('resnet18', pretrained, **model_args)
 
 

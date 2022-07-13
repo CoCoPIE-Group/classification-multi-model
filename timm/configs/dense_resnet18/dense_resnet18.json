@@ -1,18 +1,19 @@
 {
     "origin": {
-        "common_train_epochs": 150,
+        "common_train_epochs": 200,
 
-        "train_data_path": "/mnt/data/imagenet",
+        "train_data_path": "/home/tmp00047/test_effnet/imagenet",
         "train_label_path": null,
-        "eval_data_path": "/mnt/data/imagenet",
+        "eval_data_path": "/home/tmp00047/test_effnet/imagenet",
         "eval_label_path": null,
-        "pretrain_model_weights_path": "./pretrained/resnet18-5c106cde.pth",
+        "pretrain_model_weights_path": null,
 
         "model": "resnet18",
         "width_multiplier": null,
         "depth_multiplier": null,
+        "scaling_factor": 2,
         "amp": true,
-        "batch_size": 192,
+        "batch_size": 64,
         "lr": 0.05,
         "sched": "cosine",
         "resplit": true,

@@ -8,7 +8,7 @@
         "eval_label_path": null,
 
         "model": "efficientnet_b0",
-        "width_multiplier": 1.0,
+        "width_multiplier": 0.703477180149999,
         "depth_multiplier": null,
         "batch_size": 192,
         "sched": "step",
@@ -39,7 +39,7 @@
         "resplit": false,
         "jsd_loss": false,
         "dist_bn": false,
-        "pretrain_model_weights_path": "./pretrained/efficientnet_b0_ra-3dd342df.pth"
+        "pretrain_model_weights_path": "./pretrained/effnetb0_xgen.pth"
     },
     "general": {
         "work_place": "effnetb0",
