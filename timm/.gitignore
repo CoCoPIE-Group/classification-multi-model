@@ -104,7 +104,6 @@ output/
 
 # PyTorch weights
 *.tar
-*.pth
 *.pt
 *.gz
 Untitled.ipynb
