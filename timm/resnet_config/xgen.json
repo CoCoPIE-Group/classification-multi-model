@@ -1,88 +1,86 @@
 {
-    "origin": {
-        "common_train_epochs": 200,
+  "origin": {
+    "common_train_epochs": 200,
 
-        "train_data_path": "/data/classification-multi-model/imagenet",
-        "train_label_path": null,
-        "eval_data_path": "/data/classification-multi-model/imagenet",
-        "eval_label_path": null,
+    "train_data_path": "/data/classification-multi-model",
+    "train_label_path": null,
+    "eval_data_path": "/data/classification-multi-model",
+    "eval_label_path": null,
 
-        "model": "resnet18",
-        "scaling_factor": 2,
-        "width_multiplier": null,
-        "depth_multiplier": null,
-        "amp": true,
-        "batch_size": 64,
-        "lr": 0.05,
-        "sched": "cosine",
-        "resplit": true,
-        "aug_splits": 3,
-        "aa": "rand-m9-mstd0.5-inc1",
-        "remode": "pixel",
-        "jsd_loss": true,
-        "dist_bn": null,
-        "split_bn": false,
-        "seed": 0,
-        "reprob": 0.6,
-        "workers": 4,
-        "drop": 0.0,
-        "drop_path": null,
-        "opt": "sgd",
-        "weight_decay": 2e-5,
-        "model_ema": false,
-        "warmup_epochs": 3,
-        "warmup_lr": 0.0001,
-        "mixup": 0.0,
-        "cutmix": 0.0,
-        "bce_loss": false,
+    "model": "resnet18",
+    "scaling_factor": 2,
+    "width_multiplier": null,
+    "depth_multiplier": null,
+    "amp": true,
+    "batch_size": 16,
+    "lr": 0.05,
+    "sched": "cosine",
+    "resplit": true,
+    "aug_splits": 3,
+    "aa": "rand-m9-mstd0.5-inc1",
+    "remode": "pixel",
+    "jsd_loss": true,
+    "dist_bn": null,
+    "split_bn": false,
+    "seed": 0,
+    "reprob": 0.6,
+    "workers": 4,
+    "drop": 0.0,
+    "drop_path": null,
+    "opt": "sgd",
+    "weight_decay": 2e-5,
+    "model_ema": false,
+    "warmup_epochs": 3,
+    "warmup_lr": 0.0001,
+    "mixup": 0.0,
+    "cutmix": 0.0,
+    "bce_loss": false,
 
-        "crop_pct": null,
-        "decay_rate":0.1,
-        "model_ema_decay": 0.9998,
-        "opt_betas": null,
-        "opt_eps": null
-    },
-    "general": {
-        "work_place": "resnet18",
-        "tran_scripts_path": null
-    },
-    "train": {
-        "log_save_folder": "logs",
-        "eval_dataset_id": null,
-        "training_dataset_id": null,
-        "uuid": "resnet18",
-        "accuracy_reverse_yn": 0,
-        "common_save_best_yn": 1
-    },
-    "prune": {
-        "sp_retrain": false,
-        "sp_admm": false,
-        "sp_config_file": null,
-        "sp_admm_update_epoch": 5,
-        "sp_admm_rho": 0.001,
-        "sparsity_type": "block_punched",
-        "sp_admm_lr": 0.01,
-        "sp_global_weight_sparsity": false,
-        "sp_admm_block": "(8,4)",
-        "sp_prune_ratios": 0,
-        "sp_prune_threshold": -1.0
-    },
-    "task": {
-        "pretrained_model_path": "./resnet_config/resnet18_xgen.pth",
-        "max_searching": 3
-    },
-    "user_requirements": {
-      "accuracy": 80.0,
-      "latency": null,
-      "margin": 0.1,
-      "searching_variable": "scaling_factor",
-      "searching_range": [
-        1,23
-      ],
-      "searching_step_size": 1
-    },
-    "compiler": {
-       "input_shape": "(1,3,224,224)",
-        "devices": ["dev"]
-   }
+    "crop_pct": null,
+    "decay_rate": 0.1,
+    "model_ema_decay": 0.9998,
+    "opt_betas": null,
+    "opt_eps": null
+  },
+  "general": {
+    "work_place": "resnet18",
+    "tran_scripts_path": null
+  },
+  "train": {
+    "log_save_folder": "logs",
+    "eval_dataset_id": null,
+    "training_dataset_id": null,
+    "uuid": "resnet18",
+    "accuracy_reverse_yn": 0,
+    "common_save_best_yn": 1
+  },
+  "prune": {
+    "sp_retrain": false,
+    "sp_admm": false,
+    "sp_config_file": null,
+    "sp_admm_update_epoch": 5,
+    "sp_admm_rho": 0.001,
+    "sparsity_type": "block_punched",
+    "sp_admm_lr": 0.01,
+    "sp_global_weight_sparsity": false,
+    "sp_admm_block": "(8,4)",
+    "sp_prune_ratios": 0,
+    "sp_prune_threshold": -1.0
+  },
+  "task": {
+    "pretrained_model_path": "./resnet_config/resnet18_xgen.pth",
+    "max_searching": 3
+  },
+  "user_requirements": {
+    "accuracy": 80.0,
+    "latency": null,
+    "margin": 0.1,
+    "searching_variable": "scaling_factor",
+    "searching_range": [1, 23],
+    "searching_step_size": 1
+  },
+  "compiler": {
+    "input_shape": "(1,3,224,224)",
+    "devices": ["dev"]
+  }
 }
