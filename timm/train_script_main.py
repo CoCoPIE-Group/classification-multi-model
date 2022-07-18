@@ -111,8 +111,8 @@ group.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='Resume full model and optimizer state from checkpoint (default: none)')
 group.add_argument('--no-resume-opt', action='store_true', default=False,
                     help='prevent resume of optimizer state when resuming model')
-group.add_argument('--num-classes', type=int, default=None, metavar='N',
-                    help='number of label classes (Model default if None)')
+# group.add_argument('--num-classes', type=int, default=None, metavar='N',
+#                     help='number of label classes (Model default if None)')
 group.add_argument('--gp', default=None, type=str, metavar='POOL',
                     help='Global pool type, one of (fast, avg, max, avgmax, avgmaxc). Model default if None.')
 group.add_argument('--img-size', type=int, default=None, metavar='N',
