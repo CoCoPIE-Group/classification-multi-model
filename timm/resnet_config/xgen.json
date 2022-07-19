@@ -44,7 +44,7 @@
         "opt_eps": null
     },
     "general": {
-        "work_place": "resnet18",
+        "work_place": null,
         "tran_scripts_path": null
     },
     "train": {
