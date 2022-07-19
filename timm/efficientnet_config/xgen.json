@@ -42,7 +42,7 @@
         "gpu_ids": [0]
     },
     "general": {
-        "work_place": "effnetb0",
+        "work_place": null,
         "tran_scripts_path": null
     },
     "train": {
