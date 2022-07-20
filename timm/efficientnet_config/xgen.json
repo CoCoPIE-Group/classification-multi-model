@@ -8,7 +8,7 @@
     "eval_label_path": null,
 
     "model": "efficientnet_b0",
-    "width_multiplier": 1.0,
+    "width_multiplier": 0.703477180149999,
     "depth_multiplier": 1.0,
     "num_classes": 1000,
     "batch_size": 64,
@@ -39,7 +39,8 @@
     "split_bn": false,
     "resplit": false,
     "jsd_loss": false,
-    "gpu_ids": [0]
+    "gpu_ids": [0],
+    "pretrain_model_weights_path": "./efficientnet_config/efficientnet_xgen.pth"
   },
   "general": {
     "work_place": null,
