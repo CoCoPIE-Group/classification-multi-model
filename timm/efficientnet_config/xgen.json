@@ -39,12 +39,10 @@
     "split_bn": false,
     "resplit": false,
     "jsd_loss": false,
-    "gpu_ids": [0],
-    "pretrain_model_weights_path": "./efficientnet_config/efficientnet_xgen.pth"
+    "gpu_ids": [0]
   },
   "general": {
-    "work_place": null,
-    "tran_scripts_path": null
+    "work_place": null
   },
   "train": {
     "log_save_folder": "logs",
@@ -60,12 +58,9 @@
     "sp_config_file": null,
     "sp_admm_update_epoch": 5,
     "sp_admm_rho": 0.001,
-    "sparsity_type": "block_punched",
     "sp_admm_lr": 0.01,
     "sp_global_weight_sparsity": false,
-    "sp_admm_block": "(8,4)",
-    "sp_prune_ratios": 0,
-    "sp_prune_threshold": -1.0
+    "sp_prune_ratios": 0
   },
   "task": {
     "pretrained_model_path": "./efficientnet_config/efficientnet_xgen.pth",
