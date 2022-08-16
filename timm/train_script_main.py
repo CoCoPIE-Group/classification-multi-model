@@ -759,8 +759,6 @@ def training_main(args_ai):
 
     del model_dummy
 
-    return args_ai
-
 def train_one_epoch(
         epoch, model, loader, optimizer, loss_fn, args,
         lr_scheduler=None, saver=None, output_dir=None, amp_autocast=suppress,
