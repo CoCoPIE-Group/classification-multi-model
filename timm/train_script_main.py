@@ -64,13 +64,14 @@ except ImportError:
     has_wandb = False
 
 from co_lib import Co_Lib as CL
-from xgen_tools import xgen_record, xgen_init, xgen_load, XgenArgs,xgen
+from xgen_tools import xgen_record, xgen_init, xgen_load, XgenArgs
 
 from timm.utils.torch_utils import print_sparsity, de_parallel
 
 from co_lib.utils import export_prune_sp_config_file
 
 COCOPIE_MAP = {'epochs': XgenArgs.cocopie_train_epochs}
+os.environ['MKL_THREADING_LAYER'] = 'GNU'
 
 torch.backends.cudnn.benchmark = True
 _logger = logging.getLogger('train')
@@ -358,13 +359,7 @@ def training_main(args_ai):
     if args_ai is None:
         args_ai = args_ai_cfg
 
-    args = xgen_init(args, args_ai, COCOPIE_MAP)
-
-    if hasattr(args, 'width_multiplier'):
-        print(f'width_multiplier: {args.width_multiplier}')
-
-    print(f'args: {args}')
-    print(f'args_text: {args_text}')
+    args, args_ai = xgen_init(args, args_ai, COCOPIE_MAP)
 
     if args.log_wandb:
         if has_wandb:
