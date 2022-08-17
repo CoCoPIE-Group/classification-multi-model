@@ -3,11 +3,11 @@ if __name__ == '__main__':
     from xgen.xgen_run import xgen
     from train_script_main import training_main
 
-    json_path = 'resnet_config/xgen_multi_gpu.json'
+    json_path = 'resnet_config/xgen.json'
 
     #if you are using new config
     from xgen.utils.args_ai_map import get_old_config
-    old_json_path = 'resnet_config/xgen_multi_gpu.json'
+    old_json_path = 'resnet_config/xgen.json'
     with open(json_path) as f:
         new = json.load(f)
 
