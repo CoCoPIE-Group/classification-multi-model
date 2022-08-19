@@ -2,6 +2,9 @@
   "general": {
     "work_place": null,
     "pretrained_model_path": "./efficientnet_config/efficientnet_xgen.pth"
+    "enable_ddp": true,
+    "CUDA_VISIBLE_DEVICES":  "0,1,2,3",
+    "random_seed": 3407
   },
   "train": {
     "log_save_folder": "logs",
