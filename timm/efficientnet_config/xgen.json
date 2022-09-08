@@ -28,7 +28,7 @@
     "opset_version": 11
   },
   "training_script_args": {
-    "common_train_epochs": 0,
+    "common_train_epochs": 300,
     "train_data_path": "/data/classification-multi-model",
     "train_label_path": null,
     "eval_data_path": "/data/classification-multi-model",
