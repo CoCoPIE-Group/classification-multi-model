@@ -360,6 +360,7 @@ def training_main(args_ai):
         args_ai = args_ai_cfg
 
     args, args_ai = xgen_init(args, args_ai, COCOPIE_MAP)
+    # args = xgen_init(args, args_ai, COCOPIE_MAP)
 
     if args.log_wandb:
         if has_wandb:

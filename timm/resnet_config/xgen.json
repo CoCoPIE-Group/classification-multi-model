@@ -40,7 +40,7 @@
     "num_classes": 1000,
     "amp": true,
     "batch_size": 16,
-    "lr": 0.05,
+    "learning_rate": 0.05,
     "sched": "cosine",
     "resplit": true,
     "aug_splits": 3,
