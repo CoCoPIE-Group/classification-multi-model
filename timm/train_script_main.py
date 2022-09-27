@@ -388,6 +388,7 @@ def training_main(args_ai):
         _logger.info('Training with a single process on 1 GPUs.')
     assert args.rank >= 0
 
+    args.model_ema = False
     # resolve AMP arguments based on PyTorch / Apex availability
     use_amp = None
     if args.amp:
