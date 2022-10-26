@@ -29,9 +29,9 @@
   },
   "training_script_args": {
     "common_train_epochs": 450,
-    "train_data_path": "/data/classification-multi-model",
+    "train_data_path": "/xgen/data/classification-multi-model",
     "train_label_path": null,
-    "eval_data_path": "/data/classification-multi-model",
+    "eval_data_path": "/xgen/data/classification-multi-model",
     "eval_label_path": null,
     "model": "efficientnet_b0",
     "width_multiplier": 0.703477180149999,

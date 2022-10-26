@@ -2,7 +2,7 @@
 
 
 # 进入到数据存放目录并下载数据
-data_path="/data/classification-multi-model"
+data_path="/xgen/data/classification-multi-model"
 mkdir ${data_path} && cd ${data_path}
 
 wget https://xgen.oss-cn-hongkong.aliyuncs.com/data/classification-multi-model/ILSVRC2012_img_train.tar
