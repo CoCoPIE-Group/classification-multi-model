@@ -388,7 +388,6 @@ def training_main(args_ai):
         _logger.info('Training with a single process on 1 GPUs.')
     assert args.rank >= 0
 
-    args.model_ema = False
     # resolve AMP arguments based on PyTorch / Apex availability
     use_amp = None
     if args.amp:
@@ -630,7 +629,7 @@ def training_main(args_ai):
     # Cocopie pruning 1:add init function******************************************************************************
     print(f'args: {args}')
     # xgen_load(model, args_ai=args_ai)
-    CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train)
+    CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train,teacher_models={})
     # export_prune_sp_config_file(CL, 'resnet18.yml')
     # CPL.init(args, model, optimizer)
     print_sparsity(model, show_sparse_only=True)
