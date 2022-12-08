@@ -106,6 +106,7 @@ I'm fortunate to be able to dedicate significant time and money of my own suppor
 * TinyNet models added by [rsomani95](https://github.com/rsomani95)
 * LCNet added via MobileNetV3 architecture
 
+
 ### Nov 22, 2021
 * A number of updated weights anew new model defs
   * `eca_halonext26ts` - 79.5 @ 256
