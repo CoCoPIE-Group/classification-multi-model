@@ -24,7 +24,6 @@ import logging
 from collections import OrderedDict
 from contextlib import suppress
 from datetime import datetime
-
 import torch
 import torch.nn as nn
 import torchvision.utils
@@ -41,7 +40,7 @@ from timm.loss import JsdCrossEntropy, BinaryCrossEntropy, SoftTargetCrossEntrop
 from timm.optim import create_optimizer_v2, optimizer_kwargs
 from timm.scheduler import create_scheduler
 from timm.utils import ApexScaler, NativeScaler
-
+from timm.utils.torch_utils import print_sparsity, de_parallel
 try:
     from apex import amp
     from apex.parallel import DistributedDataParallel as ApexDDP
@@ -66,7 +65,7 @@ except ImportError:
 from co_lib import Co_Lib as CL
 from xgen_tools import xgen_record, xgen_init, xgen_load, XgenArgs
 
-from timm.utils.torch_utils import print_sparsity, de_parallel
+
 
 from co_lib.utils import export_prune_sp_config_file
 
@@ -360,7 +359,9 @@ def training_main(args_ai):
         args_ai = args_ai_cfg
 
     args, args_ai = xgen_init(args, args_ai, COCOPIE_MAP)
-    # args = xgen_init(args, args_ai, COCOPIE_MAP)
+    # not using distillation
+    if not args_ai['user_requirements']["use_distillation"]:
+        del args_ai['distillation']
 
     if args.log_wandb:
         if has_wandb:
@@ -425,7 +426,7 @@ def training_main(args_ai):
         width_multiplier=args.width_multiplier if hasattr(args, "width_multiplier") else None,
         depth_multiplier=args.depth_multiplier if hasattr(args, "depth_multiplier") else None,
         scaling_factor=args.scaling_factor if hasattr(args, "scaling_factor") else None)
-
+    
 
     xgen_load(model, args_ai=args_ai)
 
@@ -628,34 +629,38 @@ def training_main(args_ai):
     )
 
     # Cocopie pruning 1:add init function******************************************************************************
-    teacher = {} 
-    # model, loss = model_factory.create_model(
-    #     args.model, args.student_state_file, args.lr_regime, args.teacher_model,
-    #     args.teacher_state_file, args)
-    teacher_model = None
-    if args.distillation_type != 'none':
-        assert args.teacher_path, 'need to specify teacher-path when using distillation'
-        print(f"Creating teacher model: {args.teacher_model}")
+    # print(f'args: {args}')
+    # xgen_load(model, args_ai=args_ai)
+    # teacher = {'RegNet': teacher_1} 
+
+    teacher = {}
+    # json.dumps(args)
+    # import pdb; pdb.set_trace()
+    if not args_ai['user_requirements']["use_default_distillation_model"]:
+        # assert args.teacher_path, 'need to specify teacher-path when using distillation'
+        # print(f"Creating teacher model: {args.teacher_model}")
+        # import pdb; pdb.set_trace()
         device = torch.device(args.device)
         teacher_model = create_model(
-            args.teacher_model,
+            args_ai['user_requirements']['teacher_model'],
             pretrained=False,
-            num_classes=args.nb_classes,
-            global_pool='avg',
-        )
-        if args.teacher_path.startswith('https'):
+            num_classes=args.num_classes,)
+        if args_ai['user_requirements']['teacher_model'].startswith('https'):
             checkpoint = torch.hub.load_state_dict_from_url(
-                args.teacher_path, map_location='cpu', check_hash=True)
+                args_ai['user_requirements']['teacher_path'], map_location='cpu', check_hash=True)
         else:
-            checkpoint = torch.load(args.teacher_path, map_location='cpu')
+            checkpoint = torch.load(args_ai['user_requirements']['teacher_path'], map_location='cpu')
         teacher_model.load_state_dict(checkpoint['model'])
         teacher_model.to(device)
         teacher_model.eval()
-        teacher = {"teacher_0":teacher_model}
+        teacher = {'teacher_0':teacher_model}
+    # model, loss = model_factory.create_model(
+    #     args.model, args.student_state_file, args.lr_regime, args.teacher_model,
+    #     args.teacher_state_file, args)
     CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train,teacher_models=teacher)
     # export_prune_sp_config_file(CL, 'resnet18.yml')
     # CPL.init(args, model, optimizer)
-    print_sparsity(model, show_sparse_only=True)
+    # print_sparsity(model, show_sparse_only=True)
     # Cocopie end
 
     # setup loss function
