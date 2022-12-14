@@ -388,7 +388,6 @@ def training_main(args_ai):
         _logger.info('Training with a single process on 1 GPUs.')
     assert args.rank >= 0
 
-    args.model_ema = False
     # resolve AMP arguments based on PyTorch / Apex availability
     use_amp = None
     if args.amp:
@@ -426,6 +425,7 @@ def training_main(args_ai):
         width_multiplier=args.width_multiplier if hasattr(args, "width_multiplier") else None,
         depth_multiplier=args.depth_multiplier if hasattr(args, "depth_multiplier") else None,
         scaling_factor=args.scaling_factor if hasattr(args, "scaling_factor") else None)
+
 
     xgen_load(model, args_ai=args_ai)
 
@@ -628,9 +628,31 @@ def training_main(args_ai):
     )
 
     # Cocopie pruning 1:add init function******************************************************************************
-    print(f'args: {args}')
-    # xgen_load(model, args_ai=args_ai)
-    CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train)
+    teacher = {} 
+    # model, loss = model_factory.create_model(
+    #     args.model, args.student_state_file, args.lr_regime, args.teacher_model,
+    #     args.teacher_state_file, args)
+    teacher_model = None
+    if args.distillation_type != 'none':
+        assert args.teacher_path, 'need to specify teacher-path when using distillation'
+        print(f"Creating teacher model: {args.teacher_model}")
+        device = torch.device(args.device)
+        teacher_model = create_model(
+            args.teacher_model,
+            pretrained=False,
+            num_classes=args.nb_classes,
+            global_pool='avg',
+        )
+        if args.teacher_path.startswith('https'):
+            checkpoint = torch.hub.load_state_dict_from_url(
+                args.teacher_path, map_location='cpu', check_hash=True)
+        else:
+            checkpoint = torch.load(args.teacher_path, map_location='cpu')
+        teacher_model.load_state_dict(checkpoint['model'])
+        teacher_model.to(device)
+        teacher_model.eval()
+        teacher = {"teacher_0":teacher_model}
+    CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train,teacher_models=teacher)
     # export_prune_sp_config_file(CL, 'resnet18.yml')
     # CPL.init(args, model, optimizer)
     print_sparsity(model, show_sparse_only=True)
