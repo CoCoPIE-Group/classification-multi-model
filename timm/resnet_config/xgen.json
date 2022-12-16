@@ -4,7 +4,6 @@
     "tran_scripts_path": null,
     "pretrained_model_path": "./resnet_config/resnet18_xgen.pth",
     "enable_ddp": true,
-    "CUDA_VISIBLE_DEVICES":  "0,1,2,3",
     "random_seed": 3407
   },
   "train": {
@@ -28,10 +27,11 @@
     ]
   },
   "training_script_args": {
+    "dataset": "torch/cifar100",
     "common_train_epochs": 200,
-    "train_data_path": "/data/classification-multi-model",
+    "train_data_path": "/data/cifar-100-python/train",
     "train_label_path": null,
-    "eval_data_path": "/data/classification-multi-model",
+    "eval_data_path": "/data/cifar-100-python/val",
     "eval_label_path": null,
     "model": "resnet18",
     "scaling_factor": 2,
@@ -66,7 +66,9 @@
     "decay_rate": 0.1,
     "model_ema_decay": 0.9998,
     "opt_betas": null,
-    "opt_eps": null
+    "opt_eps": null,
+    "teacher_model": "resnet50",
+    "teacher_path": "/data/Projects/classification-multi-model-efficientnet/timm/output/train/20221215-083742-resnet50-224/model_best.pth.tar"
   },
   "pruning": {
     "sparsity_type": "block_punched",
@@ -87,5 +89,24 @@
       23
     ],
     "searching_granularity": 1
+  },
+  "distillation": {
+    "distillation_method" : "classic_distillation",
+    "enable_ddp":false,
+    "enable_dp":false,
+    "input_shape": null,
+    "original_loss_weights":0.1,
+
+    "tag_loss_weights": 0.9,
+    "tag_loss": "kl",  
+    "tag_temperature": 4,
+    "tag_loss_combination_method": "avg",
+    "feature_loss_weights":0.9,
+    "feature_default_temperature":1,
+    "advance_feature_mapping": {}, 
+
+    "regularization_loss_weights": 1,
+    "regularization_loss_types":[["tag_discriminator",1]], 
+    "discriminator_lr":1e-4
   }
 }
