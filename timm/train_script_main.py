@@ -650,7 +650,7 @@ def training_main(args_ai):
                 args_ai['user_requirements']['teacher_path'], map_location='cpu', check_hash=True)
         else:
             checkpoint = torch.load(args_ai['user_requirements']['teacher_path'], map_location='cpu')
-        teacher_model.load_state_dict(checkpoint['model'])
+        teacher_model.load_state_dict(checkpoint['state_dict'])
         teacher_model.to(device)
         teacher_model.eval()
         teacher = {'teacher_0':teacher_model}
