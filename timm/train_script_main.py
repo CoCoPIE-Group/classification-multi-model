@@ -359,9 +359,6 @@ def training_main(args_ai):
         args_ai = args_ai_cfg
 
     args, args_ai = xgen_init(args, args_ai, COCOPIE_MAP)
-    # not using distillation
-    if not args_ai['user_requirements']["use_distillation"]:
-        del args_ai['distillation']
 
     if args.log_wandb:
         if has_wandb:
