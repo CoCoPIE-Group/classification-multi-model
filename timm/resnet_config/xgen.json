@@ -68,7 +68,7 @@
     "opt_betas": null,
     "opt_eps": null,
     "teacher_model": "resnet50",
-    "teacher_path": "/data/Projects/classification-multi-model-efficientnet/timm/output/train/20221215-083742-resnet50-224/model_best.pth.tar"
+    "teacher_path": "/root/Projects/classification-multi-model-resnet/timm/resnet_config/model_best.pth.tar"
   },
   "pruning": {
     "sparsity_type": "block_punched",
