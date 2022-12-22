@@ -67,8 +67,8 @@
     "model_ema_decay": 0.9998,
     "opt_betas": null,
     "opt_eps": null,
-    "teacher_model": "resnet50",
-    "teacher_path": "/root/Projects/classification-multi-model-resnet/timm/resnet_config/model_best.pth.tar"
+    "teacher_model": "resnet101d",
+    "teacher_path": "/root/Projects/classification-multi-model-resnet/timm/resnet_config/resnet101d_best.pth.tar"
   },
   "pruning": {
     "sparsity_type": "block_punched",
