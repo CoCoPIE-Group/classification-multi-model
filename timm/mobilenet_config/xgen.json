@@ -66,7 +66,7 @@
     "opt_betas": null,
     "opt_eps": null,
     "teacher_model": "mobilenetv2_100",
-    "teacher_path": "/home/ubuntu/data/mobilenetv2_100_best.pth.tar",
+    "teacher_path": "/root/Projects/classification-multi-model-mobilenet/timm/mobilenet_config/mobilenetv2_100_best.pth.tar",
     "distillation_type": "hard",
     "distillation_alpha": 0.5
   },
