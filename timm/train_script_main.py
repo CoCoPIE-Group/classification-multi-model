@@ -359,9 +359,6 @@ def training_main(args_ai):
         args_ai = args_ai_cfg
 
     args, args_ai = xgen_init(args, args_ai, COCOPIE_MAP)
-    # not using distillation
-    if not args_ai['user_requirements']["use_distillation"]:
-        del args_ai['distillation']
 
     if args.log_wandb:
         if has_wandb:
@@ -650,7 +647,7 @@ def training_main(args_ai):
                 args_ai['user_requirements']['teacher_path'], map_location='cpu', check_hash=True)
         else:
             checkpoint = torch.load(args_ai['user_requirements']['teacher_path'], map_location='cpu')
-        teacher_model.load_state_dict(checkpoint['model'])
+        teacher_model.load_state_dict(checkpoint['state_dict'])
         teacher_model.to(device)
         teacher_model.eval()
         teacher = {'teacher_0':teacher_model}
