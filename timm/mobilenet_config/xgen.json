@@ -27,9 +27,9 @@
   },
   "training_script_args": {
     "common_train_epochs": 200,
-    "train_data_path": "/data/flower",
+    "train_data_path": "/data/classification-multi-model",
     "train_label_path": null,
-    "eval_data_path": "/data/flower",
+    "eval_data_path": "/data/classification-multi-model",
     "eval_label_path": null,
     "model": "mobilenetv2_100",
     "scaling_factor": null,
