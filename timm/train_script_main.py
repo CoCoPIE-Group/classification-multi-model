@@ -631,12 +631,7 @@ def training_main(args_ai):
     # teacher = {'RegNet': teacher_1} 
 
     teacher = {}
-    # json.dumps(args)
-    # import pdb; pdb.set_trace()
     if not args_ai['user_requirements']["use_default_distillation_model"]:
-        # assert args.teacher_path, 'need to specify teacher-path when using distillation'
-        # print(f"Creating teacher model: {args.teacher_model}")
-        # import pdb; pdb.set_trace()
         device = torch.device(args.device)
         teacher_model = create_model(
             args_ai['user_requirements']['teacher_model'],
@@ -647,17 +642,15 @@ def training_main(args_ai):
                 args_ai['user_requirements']['teacher_path'], map_location='cpu', check_hash=True)
         else:
             checkpoint = torch.load(args_ai['user_requirements']['teacher_path'], map_location='cpu')
-        teacher_model.load_state_dict(checkpoint['state_dict'])
+        if 'model' in checkpoint:
+            teacher_model.load_state_dict(checkpoint['model'])
+        else:
+            teacher_model.load_state_dict(checkpoint['state_dict'])
         teacher_model.to(device)
         teacher_model.eval()
         teacher = {'teacher_0':teacher_model}
-    # model, loss = model_factory.create_model(
-    #     args.model, args.student_state_file, args.lr_regime, args.teacher_model,
-    #     args.teacher_state_file, args)
     CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train,teacher_models=teacher)
-    # export_prune_sp_config_file(CL, 'resnet18.yml')
-    # CPL.init(args, model, optimizer)
-    # print_sparsity(model, show_sparse_only=True)
+
     # Cocopie end
 
     # setup loss function
