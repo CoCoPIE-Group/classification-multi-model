@@ -66,7 +66,7 @@
     "opt_betas": null,
     "opt_eps": null,
     "teacher_model": "regnety_160",
-    "teacher_path": "https://dl.fbaipublicfiles.com/deit/regnety_160-a5fe301d.pth",
+    "teacher_path": "/root/Projects/classification-mobilenet/timm/teacher_models/regnety_160-a5fe301d.pth",
     "distillation_type": "hard",
     "distillation_alpha": 0.5
   },

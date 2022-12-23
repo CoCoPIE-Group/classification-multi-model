@@ -67,7 +67,7 @@
     "opt_betas": null,
     "opt_eps": null,
     "teacher_model": "regnety_160",
-    "teacher_path": "https://dl.fbaipublicfiles.com/deit/regnety_160-a5fe301d.pth",
+    "teacher_path": "/root/Projects/classification-resnet/timm/teacher_models/regnety_160-a5fe301d.pth"
   },
   "pruning": {
     "sparsity_type": "block_punched",
@@ -90,22 +90,25 @@
     "searching_granularity": 1
   },
   "distillation": {
-    "distillation_method" : "classic_distillation",
-    "enable_ddp":false,
-    "enable_dp":false,
+    "distillation_method": "classic_distillation",
+    "enable_ddp": false,
+    "enable_dp": false,
     "input_shape": null,
-    "original_loss_weights":0.1,
-
+    "original_loss_weights": 0.1,
     "tag_loss_weights": 0.9,
-    "tag_loss": "kl",  
+    "tag_loss": "kl",
     "tag_temperature": 4,
     "tag_loss_combination_method": "avg",
-    "feature_loss_weights":0.9,
-    "feature_default_temperature":1,
-    "advance_feature_mapping": {}, 
-
+    "feature_loss_weights": 0.9,
+    "feature_default_temperature": 1,
+    "advance_feature_mapping": {},
     "regularization_loss_weights": 1,
-    "regularization_loss_types":[["tag_discriminator",1]], 
-    "discriminator_lr":1e-4
+    "regularization_loss_types": [
+      [
+        "tag_discriminator",
+        1
+      ]
+    ],
+    "discriminator_lr": 1e-4
   }
 }
