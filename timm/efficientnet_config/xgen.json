@@ -66,8 +66,8 @@
     "split_bn": false,
     "resplit": false,
     "jsd_loss": false,
-    "teacher_model": "efficientnet_b4",
-    "teacher_path": "/root/Projects/classification-multi-model-efficientnet/timm/efficientnet_config/efficientnet_b4_best.pth.tar",
+    "teacher_model": "regnety_160",
+    "teacher_path": "https://dl.fbaipublicfiles.com/deit/regnety_160-a5fe301d.pth",
     "distillation_type": "hard",
     "distillation_alpha": 0.5
   },
