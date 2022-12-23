@@ -66,8 +66,8 @@
     "model_ema_decay": 0.9998,
     "opt_betas": null,
     "opt_eps": null,
-    "teacher_model": "resnet101d",
-    "teacher_path": "/root/Projects/classification-multi-model-resnet/timm/resnet_config/resnet101d_best.pth.tar"
+    "teacher_model": "regnety_160",
+    "teacher_path": "https://dl.fbaipublicfiles.com/deit/regnety_160-a5fe301d.pth",
   },
   "pruning": {
     "sparsity_type": "block_punched",
