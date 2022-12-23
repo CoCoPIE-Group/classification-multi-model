@@ -631,7 +631,9 @@ def training_main(args_ai):
     # teacher = {'RegNet': teacher_1} 
 
     teacher = {}
-    if not args_ai['user_requirements']["use_default_distillation_model"]:
+    user_requirements = args_ai.get('user_requirements', {})
+    use_default_distillation_model = user_requirements.get('use_default_distillation_model', False)
+    if not use_default_distillation_model:
         device = torch.device(args.device)
         teacher_model = create_model(
             args_ai['user_requirements']['teacher_model'],
