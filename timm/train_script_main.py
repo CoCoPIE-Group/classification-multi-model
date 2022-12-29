@@ -630,29 +630,29 @@ def training_main(args_ai):
     # xgen_load(model, args_ai=args_ai)
     # teacher = {'RegNet': teacher_1} 
 
-    teacher = {}
-    user_requirements = args_ai.get('user_requirements', {})
-    use_distillation = user_requirements.get('use_distillation', False)
-    use_default_distillation_model = user_requirements.get('use_default_distillation_model', False)
-    if use_distillation and not use_default_distillation_model:
-        device = torch.device(args.device)
-        teacher_model = create_model(
-            args_ai['user_requirements']['teacher_model'],
-            pretrained=False,
-            num_classes=args.num_classes,)
-        if args_ai['user_requirements']['teacher_model'].startswith('https'):
-            checkpoint = torch.hub.load_state_dict_from_url(
-                args_ai['user_requirements']['teacher_path'], map_location='cpu', check_hash=True)
-        else:
-            checkpoint = torch.load(args_ai['user_requirements']['teacher_path'], map_location='cpu')
-        if 'model' in checkpoint:
-            teacher_model.load_state_dict(checkpoint['model'])
-        else:
-            teacher_model.load_state_dict(checkpoint['state_dict'])
-        teacher_model.to(device)
-        teacher_model.eval()
-        teacher = {'teacher_0':teacher_model}
-    CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train,teacher_models=teacher)
+    #     teacher = {}
+    #     user_requirements = args_ai.get('user_requirements', {})
+    #     use_distillation = user_requirements.get('use_distillation', False)
+    #     use_default_distillation_model = user_requirements.get('use_default_distillation_model', False)
+    #     if use_distillation and not use_default_distillation_model:
+    #         device = torch.device(args.device)
+    #         teacher_model = create_model(
+    #             args_ai['user_requirements']['teacher_model'],
+    #             pretrained=False,
+    #             num_classes=args.num_classes,)
+    #         if args_ai['user_requirements']['teacher_model'].startswith('https'):
+    #             checkpoint = torch.hub.load_state_dict_from_url(
+    #                 args_ai['user_requirements']['teacher_path'], map_location='cpu', check_hash=True)
+    #         else:
+    #             checkpoint = torch.load(args_ai['user_requirements']['teacher_path'], map_location='cpu')
+    #         if 'model' in checkpoint:
+    #             teacher_model.load_state_dict(checkpoint['model'])
+    #         else:
+    #             teacher_model.load_state_dict(checkpoint['state_dict'])
+    #         teacher_model.to(device)
+    #         teacher_model.eval()
+    #         teacher = {'teacher_0':teacher_model}
+    CL.init(args=args_ai, model=model, optimizer=optimizer, data_loader=loader_train,teacher_models={})
 
     # Cocopie end
 
