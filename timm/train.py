@@ -153,7 +153,7 @@ group.add_argument('--layer-decay', type=float, default=None,
 group = parser.add_argument_group('Learning rate schedule parameters')
 group.add_argument('--sched', default='cosine', type=str, metavar='SCHEDULER',
                     help='LR scheduler (default: "step"')
-group.add_argument('--lr', type=float, default=0.05, metavar='LR',
+group.add_argument('--learning_rate', type=float, default=0.05, metavar='LR',
                     help='learning rate (default: 0.05)')
 group.add_argument('--lr-noise', type=float, nargs='+', default=None, metavar='pct, pct',
                     help='learning rate noise on/off epoch percentages')
