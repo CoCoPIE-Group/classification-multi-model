@@ -83,10 +83,10 @@
     "prune_threshold": -1.0
   },
   "scaling": {
-    "searching_variable": "width_multiplier",
+    "searching_variable": "channel_multiplier",
     "searching_range": [
       0.5,
-      1.5
+      1.0
     ],
     "searching_granularity": 0.25
   },
