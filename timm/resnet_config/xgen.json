@@ -36,7 +36,7 @@
     "scaling_factor": 2,
     "width_multiplier": null,
     "depth_multiplier": null,
-    "num_classes": 100,
+    "num_classes": 1000,
     "amp": true,
     "batch_size": 16,
     "learning_rate": 0.05,
