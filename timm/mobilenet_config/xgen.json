@@ -65,10 +65,11 @@
     "model_ema_decay": 0.9998,
     "opt_betas": null,
     "opt_eps": null,
+    "gpu_ids": [
+      0
+    ],
     "teacher_model": "regnety_160",
-    "teacher_path": "/root/Projects/classification-mobilenet/timm/teacher_models/regnety_160-a5fe301d.pth",
-    "distillation_type": "hard",
-    "distillation_alpha": 0.5
+    "teacher_path": "/root/Projects/classification-mobilenet/timm/teacher_models/regnety_160-a5fe301d.pth"
   },
   "pruning": {
     "sparsity_type": "block_punched",
