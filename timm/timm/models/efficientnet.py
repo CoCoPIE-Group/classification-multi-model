@@ -1308,7 +1308,12 @@ def mnasnet_small(pretrained=False, **kwargs):
     model = _gen_mnasnet_small('mnasnet_small', 1.0, pretrained=pretrained, **kwargs)
     return model
 
-
+@register_model
+def mobilenetv2(pretrained=False, **kwargs):
+    """ MobileNet V2 w/ 1.0 channel multiplier """
+    model = _gen_mobilenet_v2('mobilenetv2', pretrained=pretrained, **kwargs)
+    return model
+  
 @register_model
 def mobilenetv2_035(pretrained=False, **kwargs):
     """ MobileNet V2 w/ 0.35 channel multiplier """
