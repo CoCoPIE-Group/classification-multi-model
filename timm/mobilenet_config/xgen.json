@@ -9,7 +9,7 @@
     "log_save_folder": "logs",
     "eval_dataset_id": null,
     "training_dataset_id": null,
-    "uuid": "mobilenetv2_100",
+    "uuid": "mobilenetv2",
     "accuracy_reverse_yn": 0,
     "common_save_best_yn": 1
   },
